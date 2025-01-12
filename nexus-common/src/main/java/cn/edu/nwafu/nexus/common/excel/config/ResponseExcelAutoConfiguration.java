@@ -28,7 +28,7 @@ import java.util.List;
 @Import(ExcelHandlerConfiguration.class)
 public class ResponseExcelAutoConfiguration {
     /**
-     * 注入 RequestMappingHandlerAdapter  Bean 以配置返回值处理器
+     * 注入 RequestMappingHandlerAdapter Bean 以配置返回值处理器
      */
     private final RequestMappingHandlerAdapter requestMappingHandlerAdapter;
 
@@ -67,7 +67,6 @@ public class ResponseExcelAutoConfiguration {
     public void setReturnValueHandlers() {
         List<HandlerMethodReturnValueHandler> returnValueHandlers = requestMappingHandlerAdapter
                 .getReturnValueHandlers();
-
 
         List<HandlerMethodReturnValueHandler> newHandlers = new ArrayList<>();
         newHandlers.add(responseExcelReturnValueHandler);

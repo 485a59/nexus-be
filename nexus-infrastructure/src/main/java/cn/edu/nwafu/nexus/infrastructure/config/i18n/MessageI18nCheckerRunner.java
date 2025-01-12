@@ -1,4 +1,4 @@
-package cn.edu.nwafu.nexus.infrastructure.config.config.i18n;
+package cn.edu.nwafu.nexus.infrastructure.config.i18n;
 
 import cn.edu.nwafu.nexus.common.api.IErrorCode;
 import cn.edu.nwafu.nexus.common.api.ResultCode;

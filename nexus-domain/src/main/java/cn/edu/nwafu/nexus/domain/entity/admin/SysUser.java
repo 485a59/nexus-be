@@ -1,10 +1,11 @@
-package cn.edu.nwafu.nexus.domain.admin.entity;
+package cn.edu.nwafu.nexus.domain.entity.admin;
 
 import cn.edu.nwafu.nexus.common.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,13 +15,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户信息表
+ * 用户信息表。
  *
  * @author Huang Z.Y.
  */
 @Getter
 @Setter
 @TableName("sys_user")
+@ApiModel(description = "用户信息表")
 public class SysUser extends BaseEntity<SysUser> {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -32,10 +34,6 @@ public class SysUser extends BaseEntity<SysUser> {
     @ApiModelProperty("角色id")
     @TableField("role_id")
     private Long roleId;
-
-    @ApiModelProperty("部门ID")
-    @TableField("dept_id")
-    private Long deptId;
 
     @ApiModelProperty("用户账号")
     @TableField("username")
@@ -84,7 +82,6 @@ public class SysUser extends BaseEntity<SysUser> {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
-
 
     @Override
     public Serializable pkVal() {

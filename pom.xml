@@ -50,6 +50,7 @@
         <com.google.guava.version>31.0.1-jre</com.google.guava.version>
         <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
         <mysql-connector-java>8.0.31</mysql-connector-java>
+        <mybatis-generator.version>1.4.1</mybatis-generator.version>
         <spring.boot.version>2.7.10</spring.boot.version>
         <easyexcel.version>3.1.1</easyexcel.version>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -223,7 +224,6 @@
                 <artifactId>ip2region</artifactId>
                 <version>${org.lionsoul.version}</version>
             </dependency>
-
             <!-- guava 通用包 -->
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -269,6 +269,12 @@
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotations.version}</version>
+            </dependency>
+            <!-- MyBatis 生成器 -->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis-generator.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

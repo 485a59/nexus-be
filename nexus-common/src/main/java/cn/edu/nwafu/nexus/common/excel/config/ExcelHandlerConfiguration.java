@@ -6,6 +6,7 @@ import cn.edu.nwafu.nexus.common.excel.handler.SingleSheetWriteHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import java.util.List;
 
@@ -36,6 +37,11 @@ public class ExcelHandlerConfiguration {
     public ResponseExcelReturnValueHandler responseExcelReturnValueHandler(
             List<SheetWriteHandler> sheetWriteHandlerList) {
         return new ResponseExcelReturnValueHandler(sheetWriteHandlerList);
+    }
+
+    @Bean
+    public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
+        return new RequestMappingHandlerAdapter();
     }
 }
     
