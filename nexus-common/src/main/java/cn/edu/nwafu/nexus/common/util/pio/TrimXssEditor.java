@@ -1,0 +1,20 @@
+package cn.edu.nwafu.nexus.common.util.pio;
+
+import cn.hutool.http.HtmlUtil;
+import cn.hutool.poi.excel.cell.CellEditor;
+import org.apache.poi.ss.usermodel.Cell;
+
+/**
+ * 读取excel的时候，去除掉html相关的标签，避免xss注入
+ *
+ * @author Huang Z.Y.
+ */
+public class TrimXssEditor implements CellEditor {
+    @Override
+    public Object edit(Cell cell, Object value) {
+        if (value instanceof String) {
+            return HtmlUtil.cleanHtmlTag(value.toString());
+        }
+        return value;
+    }
+}

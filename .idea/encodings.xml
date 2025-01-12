@@ -7,10 +7,12 @@
     <file url="file://$PROJECT_DIR$/nexus-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-domain/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/nexus-infra/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/nexus-infra/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-infrastructure/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-infrastructure/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-portal/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-portal/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-security/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

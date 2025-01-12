@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,8 +12,9 @@
         <module>nexus-admin</module>
         <module>nexus-domain</module>
         <module>nexus-common</module>
-        <module>nexus-infra</module>
+        <module>nexus-infrastructure</module>
         <module>nexus-portal</module>
+        <module>nexus-security</module>
     </modules>
 
     <properties>
@@ -27,9 +28,11 @@
         <swagger.version>3.0.0</swagger.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>
-        <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
         <oshi.version>6.4.0</oshi.version>
+        <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <commons.io.version>2.11.0</commons.io.version>
+        <swagger-models.version>1.6.0</swagger-models.version>
+        <swagger-annotations.version>1.6.0</swagger-annotations.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <commons.collections.version>3.2.2</commons.collections.version>
         <poi.version>4.1.2</poi.version>
@@ -38,6 +41,7 @@
         <hutool.version>5.7.22</hutool.version>
         <lombok.version>1.18.24</lombok.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <pagehelper.version>5.3.2</pagehelper.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <mockito.version>1.10.19</mockito.version>
         <it.ozimov.version>0.7.3</it.ozimov.version>
@@ -47,6 +51,7 @@
         <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
         <mysql-connector-java>8.0.31</mysql-connector-java>
         <spring.boot.version>2.7.10</spring.boot.version>
+        <easyexcel.version>3.1.1</easyexcel.version>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.5</maven.surefire.plugin.version>
         <maven.war.plugin.version>3.1.0</maven.war.plugin.version>
@@ -86,17 +91,17 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <!-- mybatis plus 代码生成器依赖 -->
+            <!-- Springfox Swagger 注解 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox-swagger.version}</version>
+            </dependency>
+            <!-- Mybatis plus 代码生成器依赖 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus-generator.version}</version>
-            </dependency>
-            <!-- pageHelper 分页插件 -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.boot.version}</version>
             </dependency>
             <!-- 获取系统信息 -->
             <dependency>
@@ -104,7 +109,7 @@
                 <artifactId>oshi-core</artifactId>
                 <version>${oshi.version}</version>
             </dependency>
-            <!-- io常用工具类 -->
+            <!-- IO 常用工具类 -->
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
@@ -116,31 +121,31 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons.fileupload.version}</version>
             </dependency>
-            <!-- excel工具 -->
+            <!-- excel 工具 -->
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi.version}</version>
             </dependency>
-            <!-- velocity代码生成使用模板 -->
+            <!-- velocity 代码生成使用模板 -->
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.version}</version>
             </dependency>
-            <!-- Mysql驱动包 -->
+            <!-- Mysql 驱动包 -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java}</version>
             </dependency>
-            <!-- collections工具类 -->
+            <!-- collections 工具类 -->
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>${commons.collections.version}</version>
             </dependency>
-            <!-- Token生成与解析 -->
+            <!-- Token 生成与解析 -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
@@ -152,11 +157,17 @@
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
+            <!-- 通用模块 -->
+            <dependency>
+                <groupId>cn.edu.nwafu</groupId>
+                <artifactId>nexus-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- admin管理模块 -->
             <dependency>
-                <groupId>com.agileboot</groupId>
-                <artifactId>agileboot-admin</artifactId>
-                <version>${project.version}</version>
+                <groupId>cn.edu.nwafu</groupId>
+                <artifactId>nexus-admin</artifactId>
+                <version>${revision}</version>
             </dependency>
             <!-- portal前台模块 -->
             <dependency>
@@ -173,14 +184,14 @@
             <!-- 核心模块 -->
             <dependency>
                 <groupId>cn.edu.nwafu</groupId>
-                <artifactId>nexus-infra</artifactId>
+                <artifactId>nexus-infrastructure</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <!-- 通用工具 -->
+            <!-- 鉴权模块 -->
             <dependency>
-                <groupId>com.agileboot</groupId>
-                <artifactId>agileboot-common</artifactId>
-                <version>${project.version}</version>
+                <groupId>cn.edu.nwafu</groupId>
+                <artifactId>nexus-security</artifactId>
+                <version>${revision}</version>
             </dependency>
             <!-- hutool common tools -->
             <dependency>
@@ -213,7 +224,7 @@
                 <version>${org.lionsoul.version}</version>
             </dependency>
 
-            <!-- 引入guava包 -->
+            <!-- guava 通用包 -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -236,7 +247,58 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>${io.swagger.version}</version>
             </dependency>
+            <!-- EasyExcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+            <!-- 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <!-- 解决 Swagger 访问主页时的 NumberFormatException 问题 -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-models.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 </project>
