@@ -1,13 +1,13 @@
 package cn.edu.nwafu.nexus.infrastructure.user.admin;
 
-import cn.edu.nwafu.nexus.common.enumeration.BasicEnums;
+import cn.edu.nwafu.nexus.common.base.BaseEnums;
 
 /**
- * 对应sys_role表的data_scope字段
+ * 对应 sys_role 表的 data_scope 字段。
  *
  * @author Huang Z.Y.
  */
-public enum DataScopeEnums implements BasicEnums<Integer> {
+public enum DataScopeEnums implements BaseEnums<Integer> {
     /**
      * 数据权限范围
      */

@@ -1,6 +1,6 @@
 package cn.edu.nwafu.nexus.common.util.ip;
 
-import cn.edu.nwafu.nexus.common.config.NexusConfig;
+import cn.edu.nwafu.nexus.common.util.jackson.JacksonUtils;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
@@ -20,23 +20,19 @@ public class OnlineIpRegionUtils {
         if (StrUtil.isBlank(ip) || IpUtils.isValidIpv6(ip) || !IpUtils.isValidIpv4(ip)) {
             return null;
         }
-
-        if (NexusConfig.isAddressEnabled()) {
-            try {
-                String rspStr = HttpUtil.get(ADDRESS_QUERY_SITE + "?ip=" + ip + "&json=true",
-                        CharsetUtil.CHARSET_GBK);
-
-                if (StrUtil.isEmpty(rspStr)) {
-                    log.error("获取地理位置异常 {}", ip);
-                    return null;
-                }
-
-                String province = JacksonUtils.getAsString(rspStr, "pro");
-                String city = JacksonUtils.getAsString(rspStr, "city");
-                return new IpRegion(province, city);
-            } catch (Exception e) {
+        try {
+            String rspStr = HttpUtil.get(ADDRESS_QUERY_SITE + "?ip=" + ip + "&json=true",
+                    CharsetUtil.CHARSET_GBK);
+            if (StrUtil.isEmpty(rspStr)) {
                 log.error("获取地理位置异常 {}", ip);
+                return null;
             }
+
+            String province = JacksonUtils.getAsString(rspStr, "pro");
+            String city = JacksonUtils.getAsString(rspStr, "city");
+            return new IpRegion(province, city);
+        } catch (Exception e) {
+            log.error("获取地理位置异常 {}", ip);
         }
         return null;
     }

@@ -60,11 +60,11 @@ public class SysUser extends BaseEntity<SysUser> {
     private String avatar;
 
     @ApiModelProperty("密码")
-    @TableField("`password`")
+    @TableField("password")
     private String password;
 
     @ApiModelProperty("帐号状态（1正常 2停用 3冻结）")
-    @TableField("`status`")
+    @TableField("status")
     private Integer status;
 
     @ApiModelProperty("最后登录IP")

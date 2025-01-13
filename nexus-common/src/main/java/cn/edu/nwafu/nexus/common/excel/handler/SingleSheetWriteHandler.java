@@ -6,7 +6,6 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -44,13 +43,7 @@ public class SingleSheetWriteHandler extends AbstractSheetWriteHandler {
         ExcelWriter excelWriter = getExcelWriter(response, responseExcel);
 
         WriteSheet sheet;
-        if (CollectionUtils.isEmpty(eleList)) {
-            sheet = EasyExcel.writerSheet(responseExcel.sheets()[0].sheetName()).build();
-        } else {
-            // 如果存在模板，未指定工作表名称
-            Class<?> dataClass = eleList.get(0).getClass();
-            sheet = this.sheet(dataClass);
-        }
+        sheet = EasyExcel.writerSheet(responseExcel.sheets()[0].sheetName()).build();
 
         // 写 Sheet
         excelWriter.write(eleList, sheet);

@@ -1,7 +1,7 @@
 package cn.edu.nwafu.nexus.infrastructure.user;
 
+import cn.edu.nwafu.nexus.common.api.ResultCode;
 import cn.edu.nwafu.nexus.common.exception.ApiException;
-import cn.edu.nwafu.nexus.common.exception.error.ErrorCode;
 import cn.edu.nwafu.nexus.infrastructure.user.admin.SysUserDetails;
 import cn.edu.nwafu.nexus.infrastructure.user.app.AppUserDetails;
 import org.springframework.security.core.Authentication;
@@ -19,7 +19,7 @@ public class AuthenticationUtils {
         try {
             return getSysUserDetails().getUserId();
         } catch (Exception e) {
-            throw new ApiException(ErrorCode.Business.USER_FAIL_TO_GET_USER_ID);
+            throw new ApiException(ResultCode.Business.USER_FAIL_TO_GET_USER_ID);
         }
     }
 
@@ -30,7 +30,7 @@ public class AuthenticationUtils {
         try {
             return (SysUserDetails) getAuthentication().getPrincipal();
         } catch (Exception e) {
-            throw new ApiException(ErrorCode.Business.USER_FAIL_TO_GET_USER_INFO);
+            throw new ApiException(ResultCode.Business.USER_FAIL_TO_GET_USER_INFO);
         }
     }
 
@@ -41,7 +41,7 @@ public class AuthenticationUtils {
         try {
             return (AppUserDetails) getAuthentication().getPrincipal();
         } catch (Exception e) {
-            throw new ApiException(ErrorCode.Business.USER_FAIL_TO_GET_USER_INFO);
+            throw new ApiException(ResultCode.Business.USER_FAIL_TO_GET_USER_INFO);
         }
     }
 

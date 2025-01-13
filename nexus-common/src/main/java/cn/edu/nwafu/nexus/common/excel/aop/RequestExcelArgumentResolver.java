@@ -2,6 +2,8 @@ package cn.edu.nwafu.nexus.common.excel.aop;
 
 import cn.edu.nwafu.nexus.common.excel.annotation.RequestExcel;
 import cn.edu.nwafu.nexus.common.excel.converter.*;
+import cn.edu.nwafu.nexus.common.excel.handler.DefaultAnalysisEventListener;
+import cn.edu.nwafu.nexus.common.excel.handler.ListAnalysisEventListener;
 import com.alibaba.excel.EasyExcel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -45,7 +48,7 @@ public class RequestExcelArgumentResolver implements HandlerMethodArgumentResolv
         // Handle custom readListener
         RequestExcel requestExcel = parameter.getParameterAnnotation(RequestExcel.class);
         assert requestExcel != null;
-        Class<? extends ListAnalysisEventListener<?>> readListenerClass = requestExcel.readListener();
+        Class<? extends ListAnalysisEventListener<?>> readListenerClass = DefaultAnalysisEventListener.class;
         // Instantiate readListenerClass
         ListAnalysisEventListener<?> readListener = BeanUtils.instantiateClass(readListenerClass);
         // Get the request file stream
@@ -70,9 +73,7 @@ public class RequestExcelArgumentResolver implements HandlerMethodArgumentResolv
                 .registerConverter(LocalTimeStringConverter.INSTANCE)
                 .registerConverter(LongStringConverter.INSTANCE)
                 .registerConverter(StringArrayConverter.INSTANCE)
-                .ignoreEmptyRow(requestExcel.ignoreEmptyRow())
                 .sheet()
-                .headRowNumber(requestExcel.headRowNumber())
                 .doRead();
 
         // Failed data process, submit to BindResult

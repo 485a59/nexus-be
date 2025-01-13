@@ -45,7 +45,7 @@ public class SysRole extends BaseEntity<SysRole> {
     private Integer roleSort;
 
     @ApiModelProperty("角色状态（1正常 0停用）")
-    @TableField("`status`")
+    @TableField("status")
     private Integer status;
 
     @ApiModelProperty("备注")

@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 message = fieldError.getField() + fieldError.getDefaultMessage();
             }
         }
-        return CommonResult.validateFailed(message);
+        return CommonResult.validate(message);
     }
 
     @ResponseBody
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
                 message = fieldError.getField() + fieldError.getDefaultMessage();
             }
         }
-        return CommonResult.validateFailed(message);
+        return CommonResult.validate(message);
     }
 
     @ResponseBody

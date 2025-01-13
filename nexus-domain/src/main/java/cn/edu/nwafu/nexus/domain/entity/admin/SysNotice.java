@@ -28,6 +28,7 @@ public class SysNotice extends BaseEntity<SysNotice> {
 
     @ApiModelProperty("公告ID")
     @TableId(value = "id", type = IdType.AUTO)
+    @TableField("id")
     private Integer id;
 
     @ApiModelProperty("公告标题")
@@ -43,7 +44,7 @@ public class SysNotice extends BaseEntity<SysNotice> {
     private String content;
 
     @ApiModelProperty("公告状态（1正常 0关闭）")
-    @TableField("`status`")
+    @TableField("status")
     private Integer status;
 
     @ApiModelProperty("备注")
