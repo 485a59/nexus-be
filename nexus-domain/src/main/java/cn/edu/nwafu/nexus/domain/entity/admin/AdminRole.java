@@ -10,40 +10,37 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serial;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * 公告表。
+ * 角色信息表。
  *
  * @author Huang Z.Y.
  */
-@TableName("sys_notice")
-@ApiModel(description = "通知公告表")
 @Getter
 @Setter
-public class SysNotice extends BaseEntity<SysNotice> {
-    @Serial
-    private static final long serialVersionUID = 7442653721343L;
-
-    @ApiModelProperty("公告ID")
+@TableName("admin_role")
+@ApiModel(description = "角色信息表")
+public class AdminRole extends BaseEntity<AdminRole> {
+    @Id
+    @ApiModelProperty("管理员角色 ID")
     @TableId(value = "id", type = IdType.AUTO)
-    @TableField("id")
-    private Integer id;
+    private Long id;
 
-    @ApiModelProperty("公告标题")
-    @TableField("title")
-    private String title;
+    @ApiModelProperty("角色名称")
+    @TableField("name")
+    private String roleName;
 
-    @ApiModelProperty("公告类型（1通知 2公告）")
-    @TableField("type")
-    private Integer type;
+    @ApiModelProperty("角色权限字符串")
+    @TableField("key")
+    private String roleKey;
 
-    @ApiModelProperty("公告内容")
-    @TableField("content")
-    private String content;
+    @ApiModelProperty("显示顺序")
+    @TableField("sort")
+    private Integer roleSort;
 
-    @ApiModelProperty("公告状态（1正常 0关闭）")
+    @ApiModelProperty("角色状态（1正常 0停用）")
     @TableField("status")
     private Integer status;
 

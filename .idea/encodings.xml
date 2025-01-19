@@ -7,6 +7,16 @@
     <file url="file://$PROJECT_DIR$/nexus-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-chunkserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-chunkserver/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-master/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/nexus-fs-master/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-fs/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-infrastructure/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-infrastructure/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-portal/src/main/java" charset="UTF-8" />

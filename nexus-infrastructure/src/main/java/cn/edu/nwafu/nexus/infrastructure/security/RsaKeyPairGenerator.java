@@ -18,6 +18,4 @@ public class RsaKeyPairGenerator {
         System.out.println(privateKeyBase64);
         System.out.println(publicKeyBase64);
     }
-
-
 }

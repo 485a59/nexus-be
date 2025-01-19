@@ -45,6 +45,7 @@
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <mockito.version>1.10.19</mockito.version>
         <it.ozimov.version>0.7.3</it.ozimov.version>
+        <javax.persistence.version>2.2</javax.persistence.version>
         <io.swagger.version>1.6.8</io.swagger.version>
         <org.lionsoul.version>2.6.5</org.lionsoul.version>
         <com.google.guava.version>31.0.1-jre</com.google.guava.version>
@@ -53,6 +54,9 @@
         <mybatis-generator.version>1.4.1</mybatis-generator.version>
         <spring.boot.version>2.7.10</spring.boot.version>
         <easyexcel.version>3.1.1</easyexcel.version>
+        <dubbo.version>2.7.14</dubbo.version>
+        <curator.version>5.1.0</curator.version>
+        <commons-lang.version>3.12.0</commons-lang.version>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.5</maven.surefire.plugin.version>
         <maven.war.plugin.version>3.1.0</maven.war.plugin.version>
@@ -80,7 +84,7 @@
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${bitwalker.version}</version>
             </dependency>
-            <!-- SpringBoot集成mybatis框架 -->
+            <!-- SpringBoot 集成 Mybatis 框架 -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -218,7 +222,7 @@
                 <artifactId>embedded-redis</artifactId>
                 <version>${it.ozimov.version}</version>
             </dependency>
-            <!-- 本地ip库 -->
+            <!-- 本地 IP 库 -->
             <dependency>
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
@@ -241,7 +245,7 @@
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
             </dependency>
-            <!-- swagger注解 -->
+            <!-- Swagger 注解 -->
             <dependency>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
@@ -275,6 +279,35 @@
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-core</artifactId>
                 <version>${mybatis-generator.version}</version>
+            </dependency>
+            <!-- Dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <!-- Zookeeper 客户端 -->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <!-- Java Persistence API (JPA) 的规范 -->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>javax.persistence-api</artifactId>
+                <version>${javax.persistence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <!-- Apache 工具类 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

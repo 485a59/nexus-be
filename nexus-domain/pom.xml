@@ -16,6 +16,11 @@
             <groupId>cn.edu.nwafu</groupId>
             <artifactId>nexus-infrastructure</artifactId>
         </dependency>
+        <!-- Java Persistence API (JPA) 的规范 -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

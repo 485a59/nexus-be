@@ -10,24 +10,19 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户信息表。
+ * 管理员用户信息表。
  *
  * @author Huang Z.Y.
  */
 @Getter
 @Setter
-@TableName("sys_user")
+@TableName("admin")
 @ApiModel(description = "用户信息表")
-public class SysUser extends BaseEntity<SysUser> {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("用户ID")
+public class Admin extends BaseEntity<Admin> {
+    @ApiModelProperty("用户编号")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -82,9 +77,4 @@ public class SysUser extends BaseEntity<SysUser> {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
-
-    @Override
-    public Serializable pkVal() {
-        return this.id;
-    }
 }
