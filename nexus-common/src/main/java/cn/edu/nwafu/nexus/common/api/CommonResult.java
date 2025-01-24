@@ -40,7 +40,7 @@ public class CommonResult<T> {
      * @param data 获取的数据
      */
     public static <T> CommonResult<T> success(T data) {
-        return new CommonResult<T>(ResultCode.Http.SUCCESS.code(), ResultCode.Http.SUCCESS.message(), data);
+        return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
     public static <T> CommonResult<T> success(String message) {
@@ -54,7 +54,7 @@ public class CommonResult<T> {
      * @param message 提示信息
      */
     public static <T> CommonResult<T> success(T data, String message) {
-        return new CommonResult<T>(ResultCode.Http.SUCCESS.code(), message, data);
+        return new CommonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
     }
 
     /**
@@ -63,7 +63,7 @@ public class CommonResult<T> {
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
-        return new CommonResult<T>(errorCode.code(), errorCode.message(), null);
+        return new CommonResult<T>(errorCode.getCode(), errorCode.getMessage(), null);
     }
 
     /**
@@ -73,7 +73,7 @@ public class CommonResult<T> {
      * @param message   错误信息
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode, String message) {
-        return new CommonResult<T>(errorCode.code(), message, null);
+        return new CommonResult<T>(errorCode.getCode(), message, null);
     }
 
     /**
@@ -82,14 +82,14 @@ public class CommonResult<T> {
      * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
-        return new CommonResult<T>(ResultCode.Http.FAILED.code(), message, null);
+        return new CommonResult<T>(ResultCode.FAILED.getCode(), message, null);
     }
 
     /**
      * 失败返回结果。
      */
     public static <T> CommonResult<T> failed() {
-        return failed(ResultCode.Http.FAILED.message());
+        return failed(ResultCode.FAILED.getMessage());
     }
 
     /**
@@ -98,20 +98,20 @@ public class CommonResult<T> {
      * @param parameters 异常参数字符串
      */
     public static <T> CommonResult<T> validate(String parameters) {
-        return failed(ResultCode.Internal.INVALID_PARAMETER, String.format(ResultCode.Internal.INVALID_PARAMETER.message(), parameters));
+        return failed(ResultCode.VALIDATE_FAILED, String.format(ResultCode.VALIDATE_FAILED.getMessage(), parameters));
     }
 
     /**
      * 未登录返回结果。
      */
     public static <T> CommonResult<T> unauthorized(T data) {
-        return new CommonResult<T>(ResultCode.Http.UNAUTHORIZED.code(), ResultCode.Http.UNAUTHORIZED.message(), data);
+        return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }
 
     /**
      * 未授权返回结果。
      */
     public static <T> CommonResult<T> forbidden(T data) {
-        return new CommonResult<T>(ResultCode.Http.FORBIDDEN.code(), ResultCode.Http.FORBIDDEN.message(), data);
+        return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 }

@@ -1,6 +1,6 @@
 package cn.edu.nwafu.nexus.security.component;
 
-import cn.edu.nwafu.common.api.CommonResult;
+import cn.edu.nwafu.nexus.common.api.CommonResult;
 import cn.hutool.json.JSONUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

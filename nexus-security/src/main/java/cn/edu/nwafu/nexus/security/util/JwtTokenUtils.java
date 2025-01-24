@@ -1,9 +1,12 @@
 package cn.edu.nwafu.nexus.security.util;
 
 import cn.edu.nwafu.nexus.common.service.RedisService;
+import cn.edu.nwafu.nexus.security.dto.UserToken;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSONObject;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +20,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * JwtToken生成的工具类，JWT token的格式：{@code header.payload.signature}。<br/>
+ * JwtToken 生成的工具类，JWT token的格式：{@code header.payload.signature}。<br/>
  * <ul>
  *     <li>header 的格式（算法、token的类型）： {"alg": "HS512","typ": "JWT"}</li>
  *     <li>payload 的格式（用户名、创建时间、生成时间）： {"sub":"wang","created":1489079981393,"exp":1489684781}</li>
@@ -73,7 +76,7 @@ public class JwtTokenUtils {
     }
 
     /**
-     * 生成 token 的过期时间
+     * 生成 token 的过期时间。
      */
     private Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
@@ -131,9 +134,9 @@ public class JwtTokenUtils {
     }
 
     /**
-     * 当原来的 token 没过期时是可以刷新的
+     * 当原来的 token 没过期时是可以刷新的。
      *
-     * @param oldToken 带tokenHead的token
+     * @param oldToken 带 tokenHead 的 token
      */
     public String refreshHeadToken(String oldToken) {
         if (StrUtil.isEmpty(oldToken)) {
@@ -163,7 +166,7 @@ public class JwtTokenUtils {
     }
 
     /**
-     * 判断 token 在指定时间内是否刚刚刷新过
+     * 判断 token 在指定时间内是否刚刚刷新过。
      *
      * @param token 原 token
      * @param time  指定时间（秒）
@@ -177,7 +180,7 @@ public class JwtTokenUtils {
     }
 
     /**
-     * 保存 刷新令牌 与 访问令牌 关联关系 到redis
+     * 保存 刷新令牌 与 访问令牌 关联关系到 Redis。
      *
      * @param userToken              用户令牌
      * @param refreshTokenExpireDate 刷新令牌过期日期
@@ -188,7 +191,7 @@ public class JwtTokenUtils {
     }
 
     /**
-     * 根据 刷新令牌 获取 访问令牌
+     * 根据刷新令牌获取访问令牌。
      *
      * @param refreshToken 刷新令牌
      */
@@ -211,9 +214,8 @@ public class JwtTokenUtils {
     }
 
     /**
-     * 生成双令牌
+     * 生成双令牌。
      */
-
     public UserToken generateTokens(UserDetails userDetails) {
         Date nowDate = new Date();
         Date accessTokenExpireDate = new Date(nowDate.getTime() + accessTokenExpire * 1000);
@@ -253,7 +255,7 @@ public class JwtTokenUtils {
     }
 
     /**
-     * 获取 token 的发布时间
+     * 获取 token 的发布时间。
      */
     public Date getIssudedDate(String token) {
         return getTokenClaim(token).getIssuedAt();

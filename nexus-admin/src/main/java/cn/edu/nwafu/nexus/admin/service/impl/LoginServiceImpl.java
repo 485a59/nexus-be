@@ -5,7 +5,8 @@ import cn.edu.nwafu.nexus.admin.service.LoginService;
 import cn.edu.nwafu.nexus.admin.service.TokenService;
 import cn.edu.nwafu.nexus.common.exception.ApiException;
 import cn.edu.nwafu.nexus.common.exception.error.ErrorCode;
-import cn.edu.nwafu.nexus.common.util.i18n.MessageUtils;
+import cn.edu.nwafu.nexus.common.service.RedisService;
+import cn.edu.nwafu.nexus.common.util.MessageUtils;
 import cn.edu.nwafu.nexus.infrastructure.user.admin.SystemUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 /**
- * 管理员登陆接口实现
+ * 管理员登录接口实现
  *
  * @author Huang Z.Y.
  */

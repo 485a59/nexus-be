@@ -5,7 +5,7 @@ CREATE TABLE `music` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '音乐编号' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '音乐编号' PRIMARY KEY,
 `file_id` BIGINT DEFAULT 0 NOT NULL COMMENT '文件 ID',
 `track` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '音轨',
 `artist` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '艺术家',
@@ -33,7 +33,7 @@ CREATE TABLE `storage` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '存储编号' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '存储编号' PRIMARY KEY,
 `user_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户 ID',
 `size` BIGINT DEFAULT 0 NOT NULL COMMENT '占用存储大小',
 `total_size` BIGINT DEFAULT 0 NOT NULL COMMENT '总存储大小'
@@ -43,7 +43,10 @@ CREATE TABLE `storage` (
 /*========= 文件权限信息表 ==========*/
 DROP TABLE IF EXISTS `file_permission`; 
 CREATE TABLE `file_permission` ( 
-`id` BIGINT NOT NULL COMMENT '文件权限 ID' primary key,
+`create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
+`update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
+`deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '文件权限 ID' PRIMARY KEY,
 `file_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '共享文件 ID',
 `user_id` BIGINT DEFAULT 0 NOT NULL COMMENT '用户 ID',
 `code` INT DEFAULT 0 NOT NULL COMMENT '用户对文件的权限码'
@@ -56,7 +59,7 @@ CREATE TABLE `file_type` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` INT NOT NULL COMMENT '文件类型编号' primary key,
+`id` INT AUTO_INCREMENT NOT NULL COMMENT '文件类型编号' PRIMARY KEY,
 `name` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件类型名',
 `order` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '次序'
 
@@ -68,7 +71,7 @@ CREATE TABLE `upload_task_detail` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '上传任务详细信息 ID' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '上传任务详细信息 ID' PRIMARY KEY,
 `file_path` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件路径',
 `file_name` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件名称',
 `chunk_number` TEXT NOT NULL COMMENT '当前分片数',
@@ -86,7 +89,7 @@ CREATE TABLE `upload_task` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '上传任务 ID' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '上传任务 ID' PRIMARY KEY,
 `user_id` BIGINT DEFAULT 0 NOT NULL COMMENT '用户 ID',
 `identifier` VARCHAR(100) DEFAULT '' NOT NULL COMMENT 'MD5 唯一标识',
 `file_name` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件名称',
@@ -103,7 +106,7 @@ CREATE TABLE `image` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '图像编号' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '图像编号' PRIMARY KEY,
 `file_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件编号',
 `width` INT DEFAULT 0 NOT NULL COMMENT '图片的宽度',
 `图像的高` INT DEFAULT 0 NOT NULL COMMENT '图片的高度'
@@ -116,7 +119,7 @@ CREATE TABLE `file` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` VARCHAR(100) NOT NULL COMMENT '文件 ID' primary key,
+`id` VARCHAR(100) NOT NULL COMMENT '文件 ID' PRIMARY KEY,
 `url` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件 URL',
 `size` BIGINT DEFAULT 0 NOT NULL COMMENT '文件大小',
 `status` INT DEFAULT 0 NOT NULL COMMENT '文件状态 (0-失效，1-生效)',
@@ -130,7 +133,10 @@ CREATE TABLE `file` (
 /*========= 文件扩展名信息表 ==========*/
 DROP TABLE IF EXISTS `file_extension`; 
 CREATE TABLE `file_extension` ( 
-`id` VARCHAR(100) NOT NULL COMMENT '文件拓展名 ID' primary key,
+`create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
+`update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
+`deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
+`id` VARCHAR(100) NOT NULL COMMENT '文件拓展名 ID' PRIMARY KEY,
 `name` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件扩展名',
 `desc` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件扩展名描述',
 `img_url` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件扩展名预览图 URL'
@@ -143,7 +149,7 @@ CREATE TABLE `share` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` VARCHAR(100) NOT NULL COMMENT '分享编号' primary key,
+`id` VARCHAR(100) NOT NULL COMMENT '分享编号' PRIMARY KEY,
 `user_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户 ID',
 `share_time` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '分享时间',
 `end_time` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '失效时间',
@@ -157,7 +163,10 @@ CREATE TABLE `share` (
 /*========= 文件分类信息表 ==========*/
 DROP TABLE IF EXISTS `file_category`; 
 CREATE TABLE `file_category` ( 
-`id` BIGINT NOT NULL COMMENT '文件分类 ID' primary key,
+`create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
+`update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
+`deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '文件分类 ID' PRIMARY KEY,
 `type_id` INT DEFAULT 0 NOT NULL COMMENT '文件类型 ID',
 `extension` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件扩展名'
 
@@ -169,7 +178,7 @@ CREATE TABLE `common_file` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` VARCHAR(100) NOT NULL COMMENT '通用文件 ID' primary key,
+`id` VARCHAR(100) NOT NULL COMMENT '通用文件 ID' PRIMARY KEY,
 `user_file_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户文件 ID'
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='通用文件信息表';
@@ -180,7 +189,7 @@ CREATE TABLE `user_file` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` VARCHAR(100) NOT NULL COMMENT '用户文件 ID' primary key,
+`id` VARCHAR(100) NOT NULL COMMENT '用户文件 ID' PRIMARY KEY,
 `user_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户 ID',
 `file_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件 ID',
 `file_name` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '文件名',
@@ -198,7 +207,7 @@ CREATE TABLE `user_file` (
 /*========= 分享文件信息表 ==========*/
 DROP TABLE IF EXISTS `share_file`; 
 CREATE TABLE `share_file` ( 
-`id` VARCHAR(100) NOT NULL COMMENT '分享文件编号' primary key,
+`id` VARCHAR(100) NOT NULL COMMENT '分享文件编号' PRIMARY KEY,
 `share_batch_num` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '分享批次号',
 `user_file_id` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户文件 ID',
 `share_file_path` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '分享文件路径'
@@ -211,7 +220,7 @@ CREATE TABLE `picture_file` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`picture_file_id` BIGINT NOT NULL COMMENT '图片文件编号' primary key,
+`picture_file_id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '图片文件编号' PRIMARY KEY,
 `url` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '图片文件 URL',
 `size` BIGINT DEFAULT 0 NOT NULL COMMENT '文件大小',
 `storage_type` INT DEFAULT 0 NOT NULL COMMENT '存储类型',
@@ -227,7 +236,7 @@ CREATE TABLE `admin_role` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '管理员角色 ID' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '管理员角色 ID' PRIMARY KEY,
 `name` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '角色名称',
 `key` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '角色权限字符串',
 `sort` INT DEFAULT 0 NOT NULL COMMENT '显示顺序',
@@ -242,7 +251,7 @@ CREATE TABLE `admin` (
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '用户编号' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '用户编号' PRIMARY KEY,
 `role_id` BIGINT DEFAULT 0 NOT NULL COMMENT '角色id',
 `username` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户账号',
 `nickname` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户昵称',
@@ -252,7 +261,9 @@ CREATE TABLE `admin` (
 `avatar` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '头像地址',
 `password` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '密码',
 `status` INT DEFAULT 0 NOT NULL COMMENT '帐号状态（1正常 2停用 3冻结）',
-`login_ip` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '最后登录IP',
+`login_ip` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '最后登录 IP',
+`roles` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '角色列表',
+`permissions` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '权限列表',
 `login_date` TIMESTAMP(3) NOT NULL COMMENT '最后登录时间',
 `is_admin` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '超级管理员标志（1是，0否）',
 `remark` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '备注'
@@ -260,12 +271,12 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息表';
 
 /*========= 用户信息表 ==========*/
-DROP TABLE IF EXISTS `user`; 
-CREATE TABLE `user` ( 
+DROP TABLE IF EXISTS `member`; 
+CREATE TABLE `member` ( 
 `create_time` TIMESTAMP(3) NOT NULL COMMENT '创建时间',
 `update_time` TIMESTAMP(3) NOT NULL COMMENT '更新时间',
 `deleted` TINYINT(1) DEFAULT 0 NOT NULL COMMENT '删除标志（0代表存在 1代表删除）',
-`id` BIGINT NOT NULL COMMENT '用户 ID' primary key,
+`id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '用户 ID' PRIMARY KEY,
 `role_id` BIGINT DEFAULT 0 NOT NULL COMMENT '角色 ID',
 `username` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户账号',
 `nickname` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户昵称',
@@ -274,8 +285,9 @@ CREATE TABLE `user` (
 `sex` INT DEFAULT 0 NOT NULL COMMENT '用户性别（0男 1女 2未知）',
 `avatar` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '头像地址',
 `password` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '密码',
-`department` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '所在院系',
 `status` INT DEFAULT 0 NOT NULL COMMENT '帐号状态（1 正常 2 停用 3 冻结）',
+`roles` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户角色（例如：[ROLE_STUDENT, ROLE_TEACHER]）',
+`permissions` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '用户权限（例如：[permission:btn:delete, permission:btn:edit]）',
 `login_ip` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '最后登录IP',
 `login_date` TIMESTAMP(3) NOT NULL COMMENT '最后登录时间',
 `remark` VARCHAR(100) DEFAULT '' NOT NULL COMMENT '备注'

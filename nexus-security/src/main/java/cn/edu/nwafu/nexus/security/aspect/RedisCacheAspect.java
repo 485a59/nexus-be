@@ -26,7 +26,7 @@ public class RedisCacheAspect {
     /**
      * 定义切点，匹配 {@code CacheService} 类中的方法。
      */
-    @Pointcut("execution(public * cn.edu.nwafu.erosion.portal.service.*CacheService.*(..))")
+    @Pointcut("execution(public * cn.edu.nwafu.nexus.portal.service.*CacheService.*(..))")
     public void cacheAspect() {
     }
 

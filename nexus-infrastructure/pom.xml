@@ -12,15 +12,10 @@
     <artifactId>nexus-infrastructure</artifactId>
 
     <dependencies>
-        <!-- SpringBoot Web容器 -->
+        <!-- SpringBoot Web 容器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- SpringBoot 拦截器 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!-- 阿里数据库连接池 -->
         <dependency>
@@ -48,17 +43,17 @@
             <groupId>cn.edu.nwafu</groupId>
             <artifactId>nexus-common</artifactId>
         </dependency>
-        <!-- mybatis plus 代码生成器依赖 -->
+        <!-- Mybatis Plus 代码生成器依赖 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
         </dependency>
-        <!--velocity代码生成使用模板 -->
+        <!--velocity 代码生成使用模板 -->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
         </dependency>
-        <!-- Mysql驱动包 -->
+        <!-- Mysql 驱动包 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

@@ -4,8 +4,8 @@ import cn.edu.nwafu.nexus.admin.dto.LoginRequest;
 import cn.edu.nwafu.nexus.admin.dto.LoginUserResult;
 import cn.edu.nwafu.nexus.admin.dto.TokenResult;
 import cn.edu.nwafu.nexus.admin.service.LoginService;
+import cn.edu.nwafu.nexus.domain.service.AdminService;
 import cn.edu.nwafu.nexus.infrastructure.user.AuthenticationUtils;
-import cn.edu.nwafu.nexus.infrastructure.user.admin.SystemUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 管理员登陆控制器。
+ * 管理员登录控制器。
  *
  * @author Huang Z.Y.
  */
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LoginController {
     private final LoginService loginService;
-    private final UserService userApplicationService;
+    private final AdminService userApplicationService;
 
 
     @Operation(summary = "登录")

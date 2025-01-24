@@ -1,7 +1,6 @@
 package cn.edu.nwafu.nexus.common.exception;
 
 import cn.edu.nwafu.nexus.common.api.IErrorCode;
-import cn.edu.nwafu.nexus.common.util.i18n.MessageUtils;
 import cn.hutool.core.util.StrUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 
 /**
- * 统一异常类
+ * 统一异常类。
  *
  * @author Huang Z.Y.
  */
@@ -32,6 +31,10 @@ public class ApiException extends RuntimeException {
      * 存储特殊数据
      */
     protected HashMap<String, Object> payload;
+
+    public ApiException(String message) {
+        super(message);
+    }
 
     public ApiException(IErrorCode errorCode) {
         setErrorCode(errorCode);
@@ -55,13 +58,7 @@ public class ApiException extends RuntimeException {
 
     private void setErrorCode(IErrorCode errorCode, Object... args) {
         this.errorCode = errorCode;
-        this.message = StrUtil.format(errorCode.message(), args);
-
-        try {
-            this.i18nMessage = MessageUtils.message(errorCode.i18nKey(), args);
-        } catch (Exception e) {
-            log.error("could not found i18nMessage entry for key: " + errorCode.i18nKey());
-        }
+        this.message = StrUtil.format(errorCode.getMessage(), args);
     }
 
     @Override

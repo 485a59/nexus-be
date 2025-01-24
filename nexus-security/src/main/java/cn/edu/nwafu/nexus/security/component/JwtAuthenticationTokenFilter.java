@@ -27,7 +27,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
-    private JwtTokenUtils jwtTokenUtil;
+    private JwtTokenUtils jwtTokenUtils;
     @Value("${jwt.token-header}")
     private String tokenHeader;
     @Value("${jwt.token-head}")
@@ -48,15 +48,16 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader(this.tokenHeader);
         if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
-            String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
-            String username = jwtTokenUtil.getUserNameFromToken(authToken);
+            // The part after "Bearer "
+            String authToken = authHeader.substring(this.tokenHead.length());
+            String username = jwtTokenUtils.getUserNameFromToken(authToken);
             log.info("checking username: {}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                if (jwtTokenUtils.validateToken(authToken, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    log.info("authenticated user:{}", username);
+                    log.info("authenticated user: {}", username);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }

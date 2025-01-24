@@ -11,4 +11,11 @@
 
     <artifactId>nexus-portal</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>cn.edu.nwafu</groupId>
+            <artifactId>nexus-domain</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

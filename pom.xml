@@ -8,6 +8,7 @@
     <artifactId>nexus-be</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <modules>
         <module>nexus-admin</module>
         <module>nexus-domain</module>
@@ -15,6 +16,7 @@
         <module>nexus-infrastructure</module>
         <module>nexus-portal</module>
         <module>nexus-security</module>
+        <module>nexus-ufop</module>
     </modules>
 
     <properties>
@@ -22,10 +24,14 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <revision>${project.version}</revision>
+        <knife4j.version>3.0.3</knife4j.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <druid.version>1.2.8</druid.version>
+        <qiniu.version>7.9.2</qiniu.version>
+        <thumbnailator.version>0.4.16</thumbnailator.version>
         <bitwalker.version>1.21</bitwalker.version>
         <swagger.version>3.0.0</swagger.version>
+        <pdf-box-version>3.0.0-RC1</pdf-box-version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>
         <oshi.version>6.4.0</oshi.version>
@@ -35,10 +41,12 @@
         <swagger-annotations.version>1.6.0</swagger-annotations.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <commons.collections.version>3.2.2</commons.collections.version>
-        <poi.version>4.1.2</poi.version>
+        <poi.version>5.2.2</poi.version>
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
         <hutool.version>5.7.22</hutool.version>
+        <httpclient.version>4.5.14</httpclient.version>
+        <fastdfs-client.version>1.26.2</fastdfs-client.version>
         <lombok.version>1.18.24</lombok.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <pagehelper.version>5.3.2</pagehelper.version>
@@ -48,14 +56,18 @@
         <javax.persistence.version>2.2</javax.persistence.version>
         <io.swagger.version>1.6.8</io.swagger.version>
         <org.lionsoul.version>2.6.5</org.lionsoul.version>
+        <aliyun.sdk.oss.version>3.13.2</aliyun.sdk.oss.version>
         <com.google.guava.version>31.0.1-jre</com.google.guava.version>
         <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
         <mysql-connector-java>8.0.31</mysql-connector-java>
         <mybatis-generator.version>1.4.1</mybatis-generator.version>
         <spring.boot.version>2.7.10</spring.boot.version>
         <easyexcel.version>3.1.1</easyexcel.version>
+        <fastjson2.version>2.0.53</fastjson2.version>
         <dubbo.version>2.7.14</dubbo.version>
+        <minio.version>8.3.4</minio.version>
         <curator.version>5.1.0</curator.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <commons-lang.version>3.12.0</commons-lang.version>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.5</maven.surefire.plugin.version>
@@ -90,6 +102,23 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-spring-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
+            </dependency>
+            <!-- 阿里云文件存储 -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.sdk.oss.version}</version>
+            </dependency>
+            <!-- PDF 预览 -->
+            <dependency>
+                <groupId>org.apache.pdfbox</groupId>
+                <artifactId>pdfbox</artifactId>
+                <version>${pdf-box-version}</version>
+            </dependency>
             <!-- mybatis plus 主依赖 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -101,6 +130,11 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${springfox-swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
             </dependency>
             <!-- Mybatis plus 代码生成器依赖 -->
             <dependency>
@@ -126,10 +160,26 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons.fileupload.version}</version>
             </dependency>
+            <!-- 图片压缩 -->
+            <dependency>
+                <groupId>net.coobird</groupId>
+                <artifactId>thumbnailator</artifactId>
+                <version>${thumbnailator.version}</version>
+            </dependency>
             <!-- excel 工具 -->
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
                 <version>${poi.version}</version>
             </dependency>
             <!-- velocity 代码生成使用模板 -->
@@ -168,13 +218,13 @@
                 <artifactId>nexus-common</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <!-- admin管理模块 -->
+            <!-- admin 管理模块 -->
             <dependency>
                 <groupId>cn.edu.nwafu</groupId>
                 <artifactId>nexus-admin</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <!-- portal前台模块 -->
+            <!-- portal 前台模块 -->
             <dependency>
                 <groupId>cn.edu.nwafu</groupId>
                 <artifactId>nexus-portal</artifactId>
@@ -186,10 +236,32 @@
                 <artifactId>nexus-domain</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <!-- MinIO -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-http</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
             <!-- 核心模块 -->
             <dependency>
                 <groupId>cn.edu.nwafu</groupId>
                 <artifactId>nexus-infrastructure</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- 用户文件统一平台 -->
+            <dependency>
+                <groupId>cn.edu.nwafu</groupId>
+                <artifactId>nexus-ufop</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- 鉴权模块 -->
@@ -203,6 +275,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- 轻量级分布式文件系统 -->
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>${fastdfs-client.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -234,12 +312,6 @@
                 <artifactId>guava</artifactId>
                 <version>${com.google.guava.version}</version>
             </dependency>
-            <!-- 多数据源 -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
@@ -268,11 +340,6 @@
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-models</artifactId>
                 <version>${swagger-models.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations.version}</version>
             </dependency>
             <!-- MyBatis 生成器 -->
             <dependency>
@@ -309,6 +376,24 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang.version}</version>
             </dependency>
+            <!-- Json Web Token -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- FastJSON -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <!-- Swagger Plus -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -340,4 +425,18 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -21,6 +21,10 @@
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.edu.nwafu</groupId>
+            <artifactId>nexus-security</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -1,6 +1,6 @@
 package cn.edu.nwafu.nexus.security.component;
 
-import cn.edu.nwafu.erosion.security.config.IgnoreUrlsConfig;
+import cn.edu.nwafu.nexus.security.config.IgnoreUrlsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -52,20 +52,21 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         FilterInvocation fi = new FilterInvocation(servletRequest, servletResponse, filterChain);
-        //OPTIONS请求直接放行
+        // OPTIONS 请求直接放行
         if (request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
             return;
         }
-        //白名单请求直接放行
+        // 白名单请求直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
         for (String path : ignoreUrlsConfig.getUrls()) {
             if (pathMatcher.match(path, request.getRequestURI())) {
+                System.out.println("Hello 放行");
                 fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
                 return;
             }
         }
-        //此处会调用AccessDecisionManager中的decide方法进行鉴权操作
+        // 此处会调用 AccessDecisionManager 中的 decide 方法进行鉴权操作
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
