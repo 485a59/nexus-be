@@ -1,6 +1,5 @@
 package cn.edu.nwafu.nexus.infrastructure.config;
 
-import cn.edu.nwafu.nexus.infrastructure.security.xss.JsonHtmlXssTrimSerializer;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -14,8 +13,6 @@ import java.util.TimeZone;
 public class JacksonConfig implements Jackson2ObjectMapperBuilderCustomizer {
     @Override
     public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
-        // 防XSS脚本注入
-        jacksonObjectMapperBuilder.deserializers(new JsonHtmlXssTrimSerializer());
         // 默认时区配置
         jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
     }

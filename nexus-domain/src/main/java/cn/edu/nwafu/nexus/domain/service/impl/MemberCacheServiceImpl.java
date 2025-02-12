@@ -2,8 +2,8 @@ package cn.edu.nwafu.nexus.domain.service.impl;
 
 import cn.edu.nwafu.nexus.common.service.RedisService;
 import cn.edu.nwafu.nexus.domain.service.MemberCacheService;
-import cn.edu.nwafu.nexus.infrastructure.entity.Member;
 import cn.edu.nwafu.nexus.infrastructure.mapper.MemberMapper;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.Member;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class MemberCacheServiceImpl implements MemberCacheService {
     private MemberMapper memberMapper;
 
     @Override
-    public void delMember(Long memberId) {
+    public void delMember(String memberId) {
         Member member = memberMapper.selectById(memberId);
         if (member != null) {
             String key = REDIS_DATABASE + ":" + REDIS_KEY_MEMBER + ":" + member.getUsername();

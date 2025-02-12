@@ -1,0 +1,7 @@
+logging:
+  level:
+    cn.edu.nwafu.nexus.infrastructure.mapper: debug  # 设置mapper包的日志级别为debug 
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 配置MyBatis-Plus的日志实现 

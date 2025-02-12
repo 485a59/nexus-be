@@ -1,7 +1,7 @@
 package cn.edu.nwafu.nexus.ufop.operation.delete;
 
 import cn.edu.nwafu.nexus.ufop.operation.delete.domain.DeleteFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 

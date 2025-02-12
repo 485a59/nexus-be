@@ -5,7 +5,7 @@ import cn.edu.nwafu.nexus.ufop.domain.ThumbImage;
 import cn.edu.nwafu.nexus.ufop.exception.operation.PreviewException;
 import cn.edu.nwafu.nexus.ufop.operation.preview.domain.PreviewFile;
 import cn.edu.nwafu.nexus.ufop.util.CharsetUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import cn.hutool.http.HttpUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

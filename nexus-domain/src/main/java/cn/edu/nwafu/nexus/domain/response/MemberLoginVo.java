@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * 用户登录响应。
  *
@@ -14,8 +16,9 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class MemberLoginVo extends UserToken {
-    private String roles;
-    private String permissions;
+    private String avatar;
+    private String nickname;
+    private List<String> roles;
 
     /**
      * 构造方法。

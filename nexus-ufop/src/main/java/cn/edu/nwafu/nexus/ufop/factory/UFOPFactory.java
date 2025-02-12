@@ -50,7 +50,7 @@ public class UFOPFactory {
     @Resource
     private FastDfsPreviewer fastDFSPreviewer;
     @Resource
-    private FastDFSWriter fastDFSWriter;
+    private FastDfsWriter fastDFSWriter;
     @Resource
     private AliyunOssUploader aliyunOSSUploader;
     @Resource
@@ -70,7 +70,6 @@ public class UFOPFactory {
     }
 
     public Uploader getUploader() {
-
         int type = Integer.parseInt(storageType);
         Uploader uploader = null;
         if (StorageTypeEnum.LOCAL.getCode() == type) {

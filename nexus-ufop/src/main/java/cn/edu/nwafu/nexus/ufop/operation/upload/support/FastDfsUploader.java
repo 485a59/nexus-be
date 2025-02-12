@@ -1,6 +1,7 @@
 package cn.edu.nwafu.nexus.ufop.operation.upload.support;
 
 import cn.edu.nwafu.nexus.common.service.RedisService;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import cn.edu.nwafu.nexus.ufop.constant.StorageTypeEnum;
 import cn.edu.nwafu.nexus.ufop.constant.UploadFileStatusEnum;
 import cn.edu.nwafu.nexus.ufop.exception.operation.UploadException;
@@ -8,7 +9,6 @@ import cn.edu.nwafu.nexus.ufop.operation.upload.Uploader;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFile;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFileResult;
 import cn.edu.nwafu.nexus.ufop.operation.upload.request.UploadMultipartFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.exception.FdfsServerException;
 import com.github.tobato.fastdfs.proto.storage.DownloadByteArray;
@@ -96,7 +96,7 @@ public class FastDfsUploader extends Uploader {
         String path = redisService.get(storagePathKey).toString();
         uploadFileResult.setFileUrl(path);
         uploadFileResult.setFileName(uploadMultipartFile.getFileName());
-        uploadFileResult.setExtendName(uploadMultipartFile.getExtension());
+        uploadFileResult.setExtension(uploadMultipartFile.getExtension());
         uploadFileResult.setFileSize(uploadFile.getTotalSize());
         if (uploadFile.getTotalChunks() == 1) {
             uploadFileResult.setFileSize(uploadMultipartFile.getSize());
@@ -111,7 +111,7 @@ public class FastDfsUploader extends Uploader {
             redisService.del(storagePathKey);
             String uploadedSizeKey = "nexus:upload:uploaded_size:" + uploadFile.getIdentifier();
             redisService.del(uploadedSizeKey);
-            if (UFOPUtils.isImageFile(uploadFileResult.getExtendName())) {
+            if (UFOPUtils.isImageFile(uploadFileResult.getExtension())) {
                 String group = "group1";
                 String path1 = uploadFileResult.getFileUrl().substring(uploadFileResult.getFileUrl().indexOf("/") + 1);
                 DownloadByteArray downloadByteArray = new DownloadByteArray();

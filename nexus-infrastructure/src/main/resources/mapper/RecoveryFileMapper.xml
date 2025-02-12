@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.nwafu.nexus.infrastructure.mapper.RecoveryFileMapper">
+    <select id="selectRecoveryFileList" resultType="cn.edu.nwafu.nexus.infrastructure.model.vo.file.RecoveryFileListVo">
+        SELECT *
+        FROM recovery_file a
+                 LEFT JOIN user_file b ON a.user_file_id = b.id
+                 LEFT JOIN file c on c.id = b.file_id
+        WHERE user_id = #{userId}
+    </select>
+</mapper>

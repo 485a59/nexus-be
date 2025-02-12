@@ -1,6 +1,6 @@
 package cn.edu.nwafu.nexus.infrastructure.mapper;
 
-import cn.edu.nwafu.nexus.infrastructure.entity.PictureFile;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.PictureFile;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

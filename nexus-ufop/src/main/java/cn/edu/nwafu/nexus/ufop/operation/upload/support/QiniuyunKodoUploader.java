@@ -2,6 +2,7 @@ package cn.edu.nwafu.nexus.ufop.operation.upload.support;
 
 import cn.edu.nwafu.nexus.common.service.RedisService;
 import cn.edu.nwafu.nexus.common.util.HttpsUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import cn.edu.nwafu.nexus.ufop.config.QiniuyunConfig;
 import cn.edu.nwafu.nexus.ufop.constant.StorageTypeEnum;
 import cn.edu.nwafu.nexus.ufop.constant.UploadFileStatusEnum;
@@ -12,7 +13,6 @@ import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFile;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFileResult;
 import cn.edu.nwafu.nexus.ufop.operation.upload.request.UploadMultipartFile;
 import cn.edu.nwafu.nexus.ufop.util.QiniuyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -80,7 +80,7 @@ public class QiniuyunKodoUploader extends Uploader {
             boolean isComplete = checkUploadStatus(uploadFile, processFile);
             uploadFileResult.setFileUrl(fileUrl);
             uploadFileResult.setFileName(uploadMultipartFile.getFileName());
-            uploadFileResult.setExtendName(uploadMultipartFile.getExtension());
+            uploadFileResult.setExtension(uploadMultipartFile.getExtension());
             uploadFileResult.setFileSize(uploadFile.getTotalSize());
             uploadFileResult.setStorageType(StorageTypeEnum.QINIUYUN_KODO);
 
@@ -97,7 +97,7 @@ public class QiniuyunKodoUploader extends Uploader {
                     throw new UFOPException("删除temp文件失败：目录路径：" + tempFile.getPath());
                 }
 
-                if (UFOPUtils.isImageFile(uploadFileResult.getExtendName())) {
+                if (UFOPUtils.isImageFile(uploadFileResult.getExtension())) {
                     Auth auth = Auth.create(qiniuyunConfig.getKodo().getAccessKey(), qiniuyunConfig.getKodo().getSecretKey());
 
                     String urlString = auth.privateDownloadUrl(qiniuyunConfig.getKodo().getDomain() + "/" + uploadFileResult.getFileUrl());

@@ -4,7 +4,7 @@ import cn.edu.nwafu.nexus.ufop.config.QiniuyunConfig;
 import cn.edu.nwafu.nexus.ufop.operation.copy.Copier;
 import cn.edu.nwafu.nexus.ufop.operation.copy.domain.CopyFile;
 import cn.edu.nwafu.nexus.ufop.util.QiniuyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;

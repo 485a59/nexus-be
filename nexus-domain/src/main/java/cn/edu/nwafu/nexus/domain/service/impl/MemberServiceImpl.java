@@ -1,19 +1,25 @@
 package cn.edu.nwafu.nexus.domain.service.impl;
 
 import cn.edu.nwafu.nexus.common.exception.Asserts;
-import cn.edu.nwafu.nexus.domain.domain.MemberDetails;
 import cn.edu.nwafu.nexus.domain.response.MemberLoginVo;
 import cn.edu.nwafu.nexus.domain.service.MemberCacheService;
 import cn.edu.nwafu.nexus.domain.service.MemberService;
-import cn.edu.nwafu.nexus.infrastructure.entity.Member;
 import cn.edu.nwafu.nexus.infrastructure.mapper.MemberMapper;
+import cn.edu.nwafu.nexus.infrastructure.mapper.SysDeptMapper;
+import cn.edu.nwafu.nexus.infrastructure.mapper.SysRoleMapper;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.Member;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.SysRole;
+import cn.edu.nwafu.nexus.infrastructure.model.vo.user.UserProfileVo;
+import cn.edu.nwafu.nexus.security.domain.MemberDetails;
 import cn.edu.nwafu.nexus.security.dto.UserToken;
+import cn.edu.nwafu.nexus.security.util.JwtTokenUtils;
+import cn.edu.nwafu.nexus.security.util.SessionUtils;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,9 +31,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @author Huang Z.Y.
@@ -46,10 +54,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     private MemberCacheService memberCacheService;
     @Resource
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private cn.edu.nwafu.nexus.security.util.JwtTokenUtils jwtTokenUtils;
+    @Resource
+    private JwtTokenUtils jwtTokenUtils;
     @Resource
     private MemberMapper memberMapper;
+    @Resource
+    private SysRoleMapper sysRoleMapper;
+    @Resource
+    private SysDeptMapper sysDeptMapper;
 
     @Override
     public void register(String username, String password, String telephone, String authCode) {
@@ -73,7 +85,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         member.setPhoneNumber(telephone);
         // 密码加密
         member.setPassword(passwordEncoder.encode(password));
-        member.setLoginDate(new Date());
+        member.setLoginTime(new Date());
         // 插入新用户
         memberMapper.insert(member);
         // 清空密码，避免返回敏感信息
@@ -95,19 +107,24 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // 生成 Token
-            String token = jwtTokenUtils.generateToken(userDetails);
             UserToken userToken = jwtTokenUtils.generateTokens(userDetails);
             // 设置 Token 的过期时间
             long currentTimeMillis = System.currentTimeMillis();
             userToken.setExpires(currentTimeMillis + EXPIRE_SECONDS * 1000);
             System.out.println("userToken:" + userToken);
             MemberLoginVo loginVo = new MemberLoginVo(userToken);
-            System.out.println(loginVo);
-            // 如果 UserDetails 是 MemberDetails 类型，可以获取 roles 和 permissions
+            // 如果 UserDetails 是 MemberDetails 类型，获取角色信息
             if (userDetails instanceof MemberDetails memberDetails) {
                 Member member = memberDetails.getMember();
-                loginVo.setRoles(member.getRoles());
-                loginVo.setPermissions(member.getPermissions());
+                loginVo.setAvatar(member.getAvatar());
+                loginVo.setNickname(member.getNickname());
+                List<SysRole> roles = memberMapper.getRolesByUserId(member.getId());
+                // 根据用户的 role_id 查询对应的角色信息
+                if (CollUtil.isNotEmpty(roles)) {
+                    loginVo.setRoles(roles.stream().map(SysRole::getRoleKey).collect(Collectors.toList()));
+                } else {
+                    loginVo.setRoles(new ArrayList<>());
+                }
             }
             return loginVo;
         } catch (AuthenticationException e) {
@@ -159,5 +176,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         }
         String realAuthCode = memberCacheService.getAuthCode(email);
         return authCode.equals(realAuthCode);
+    }
+
+    @Override
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
+
+    @Override
+    public UserProfileVo getCurrentUserProfile() {
+        String userId = SessionUtils.getUserId();
+        Member member = getById(userId);
+        UserProfileVo profileVo = new UserProfileVo();
+        BeanUtils.copyProperties(member, profileVo);
+        return profileVo;
     }
 }

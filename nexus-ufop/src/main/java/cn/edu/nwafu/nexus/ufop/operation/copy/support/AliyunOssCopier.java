@@ -4,7 +4,7 @@ import cn.edu.nwafu.nexus.ufop.config.AliyunConfig;
 import cn.edu.nwafu.nexus.ufop.operation.copy.Copier;
 import cn.edu.nwafu.nexus.ufop.operation.copy.domain.CopyFile;
 import cn.edu.nwafu.nexus.ufop.util.AliyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.aliyun.oss.OSS;
 import org.apache.commons.io.IOUtils;
 

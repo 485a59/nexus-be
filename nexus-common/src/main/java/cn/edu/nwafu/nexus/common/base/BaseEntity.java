@@ -2,17 +2,25 @@ package cn.edu.nwafu.nexus.common.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 
 /**
- * 实体基类
+ * 实体基类。
  *
  * @author Huang Z.Y.
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseEntity<T extends Model<?>> extends Model<T> {
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -20,13 +28,11 @@ public class BaseEntity<T extends Model<?>> extends Model<T> {
 
     @ApiModelProperty("更新时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+
     protected Date updateTime;
 
-    /**
-     * deleted 字段请在数据库中设置为 tinyInt，并且非 null，默认值为 0
-     */
-    @ApiModelProperty("删除标志（0代表存在 1代表删除）")
-    @TableField("deleted")
-    @TableLogic
-    protected Boolean deleted;
+    @ApiModelProperty("删除时间")
+    @Nullable
+    @TableField(value = "delete_time", exist = false)
+    protected Date deleteTime;
 }

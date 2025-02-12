@@ -4,7 +4,7 @@ import cn.edu.nwafu.nexus.ufop.config.AliyunConfig;
 import cn.edu.nwafu.nexus.ufop.operation.delete.Deleter;
 import cn.edu.nwafu.nexus.ufop.operation.delete.domain.DeleteFile;
 import cn.edu.nwafu.nexus.ufop.util.AliyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.aliyun.oss.OSS;
 
 /**

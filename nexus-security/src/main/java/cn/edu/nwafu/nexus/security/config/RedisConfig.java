@@ -1,7 +1,5 @@
 package cn.edu.nwafu.nexus.security.config;
 
-import cn.edu.nwafu.nexus.common.service.RedisService;
-import cn.edu.nwafu.nexus.common.service.impl.RedisServiceImpl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -77,10 +75,5 @@ public class RedisConfig {
         objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
         serializer.setObjectMapper(objectMapper);
         return serializer;
-    }
-
-    @Bean
-    public RedisService redisService() {
-        return new RedisServiceImpl();
     }
 }

@@ -4,7 +4,7 @@ import cn.edu.nwafu.nexus.ufop.exception.operation.ReadException;
 import cn.edu.nwafu.nexus.ufop.operation.read.Reader;
 import cn.edu.nwafu.nexus.ufop.operation.read.domain.ReadFile;
 import cn.edu.nwafu.nexus.ufop.util.ReadFileUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 

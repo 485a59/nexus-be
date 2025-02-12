@@ -3,7 +3,7 @@ package cn.edu.nwafu.nexus.ufop.operation.write.support;
 import cn.edu.nwafu.nexus.ufop.exception.operation.WriteException;
 import cn.edu.nwafu.nexus.ufop.operation.write.Writer;
 import cn.edu.nwafu.nexus.ufop.operation.write.domain.WriteFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileNotFoundException;

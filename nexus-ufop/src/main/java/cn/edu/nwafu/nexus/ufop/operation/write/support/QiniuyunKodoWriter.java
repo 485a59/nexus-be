@@ -5,7 +5,7 @@ import cn.edu.nwafu.nexus.ufop.exception.operation.WriteException;
 import cn.edu.nwafu.nexus.ufop.operation.write.Writer;
 import cn.edu.nwafu.nexus.ufop.operation.write.domain.WriteFile;
 import cn.edu.nwafu.nexus.ufop.util.QiniuyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.google.gson.Gson;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;

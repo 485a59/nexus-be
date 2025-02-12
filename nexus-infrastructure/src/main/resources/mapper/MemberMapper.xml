@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nwafu.nexus.infrastructure.mapper.MemberMapper">
+    <select id="selectUserWithDept" resultType="cn.edu.nwafu.nexus.infrastructure.model.vo.system.UserListVo">
+        SELECT DISTINCT
+        m.id,
+        m.username,
+        m.nickname,
+        m.email,
+        m.phone_number,
+        m.sex,
+        m.status,
+        m.avatar,
+        m.create_time,
+        m.update_time,
+        m.remark,
+        m.login_ip,
+        m.login_time,
+        d.name,
+        d.id as deptId,
+        GROUP_CONCAT(r.id) as roleIds,
+        GROUP_CONCAT(r.role_name) as roleNames
+        FROM member m
+        LEFT JOIN sys_dept d ON m.dept_id = d.id
+        LEFT JOIN sys_role_user ru ON m.id = ru.user_id
+        LEFT JOIN sys_role r ON ru.role_id = r.id
+        <where>
+            <if test="param.username != null and param.username != ''">
+                AND m.username LIKE CONCAT('%', #{param.username}, '%')
+            </if>
+            <if test="param.phoneNumber != null and param.phoneNumber != ''">
+                AND m.phone_number LIKE CONCAT('%', #{param.phoneNumber}, '%')
+            </if>
+            <if test="param.status != null">
+                AND m.status = #{param.status}
+            </if>
+            <if test="param.deptId != null">
+                AND d.id = #{param.deptId}
+            </if>
+            AND m.delete_time IS NULL
+        </where>
+        GROUP BY m.id, m.username, m.nickname, m.email, m.phone_number, m.sex, m.status,
+        m.avatar, m.create_time, m.update_time, m.remark, m.login_ip, m.login_time,
+        d.name, d.id
+        ORDER BY m.create_time DESC
+    </select>
+
+    <select id="getRolesByUserId" resultType="cn.edu.nwafu.nexus.infrastructure.model.entity.SysRole">
+        SELECT r.id,
+               r.role_name,
+               r.role_key,
+               r.status,
+               r.create_time,
+               r.update_time,
+               r.remark
+        FROM sys_role r
+                 LEFT JOIN sys_role_user ru ON r.id = ru.role_id
+        WHERE ru.user_id = #{userId}
+          AND r.delete_time IS NULL
+    </select>
+</mapper> 

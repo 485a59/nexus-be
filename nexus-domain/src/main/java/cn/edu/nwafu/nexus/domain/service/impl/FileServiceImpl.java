@@ -1,30 +1,36 @@
 package cn.edu.nwafu.nexus.domain.service.impl;
 
 import cn.edu.nwafu.nexus.common.exception.ApiException;
-import cn.edu.nwafu.nexus.common.util.file.UFOPUtils;
-import cn.edu.nwafu.nexus.domain.domain.SystemFile;
+import cn.edu.nwafu.nexus.common.operation.FileOperation;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
+import cn.edu.nwafu.nexus.domain.component.AsyncTaskHandler;
 import cn.edu.nwafu.nexus.domain.response.FileDetailVo;
 import cn.edu.nwafu.nexus.domain.service.FileService;
-import cn.edu.nwafu.nexus.infrastructure.entity.File;
-import cn.edu.nwafu.nexus.infrastructure.entity.Image;
-import cn.edu.nwafu.nexus.infrastructure.entity.Music;
-import cn.edu.nwafu.nexus.infrastructure.entity.UserFile;
+import cn.edu.nwafu.nexus.domain.util.SystemFileUtils;
 import cn.edu.nwafu.nexus.infrastructure.mapper.FileMapper;
 import cn.edu.nwafu.nexus.infrastructure.mapper.ImageMapper;
 import cn.edu.nwafu.nexus.infrastructure.mapper.MusicMapper;
 import cn.edu.nwafu.nexus.infrastructure.mapper.UserFileMapper;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.File;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.Image;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.Music;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.UserFile;
+import cn.edu.nwafu.nexus.security.util.SessionUtils;
+import cn.edu.nwafu.nexus.ufop.factory.UFOPFactory;
+import cn.edu.nwafu.nexus.ufop.operation.download.Downloader;
+import cn.edu.nwafu.nexus.ufop.operation.download.domain.DownloadFile;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -32,6 +38,7 @@ import java.util.concurrent.Executors;
 /**
  * @author Huang Z.Y.
  */
+@Service
 public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements FileService {
     public static Executor executor = Executors.newFixedThreadPool(20);
     @Resource
@@ -41,15 +48,12 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     @Resource
     UFOPFactory ufopFactory;
     @Resource
-    AsyncTaskComp asyncTaskComp;
+    @Lazy
+    AsyncTaskHandler asyncTaskHandler;
     @Resource
     MusicMapper musicMapper;
     @Resource
     ImageMapper imageMapper;
-    @Resource
-    FileDealComp fileDealComp;
-    @Value("${ufop.storage-type}")
-    private Integer storageType;
 
     @Override
     public Long getFilePointCount(String fileId) {
@@ -64,9 +68,9 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         File file = fileMapper.selectById(userFile.getFileId());
         java.io.File destFile = new java.io.File(UFOPUtils.getStaticPath() + "temp" + java.io.File.separator + file.getUrl());
 
-        Downloader downloader = ufopFactory.getDownloader(fileBean.getStorageType());
+        Downloader downloader = ufopFactory.getDownloader(file.getStorageType());
         DownloadFile downloadFile = new DownloadFile();
-        downloadFile.setFileUrl(fileBean.getFileUrl());
+        downloadFile.setFileUrl(file.getUrl());
         InputStream inputStream = downloader.getInputStream(downloadFile);
 
         try {
@@ -76,41 +80,42 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         }
 
         String extendName = userFile.getExtension();
-        String unzipUrl = UFOPUtils.getTempFile(fileBean.getFileUrl()).getAbsolutePath().replace("." + extendName, "");
+        String unzipUrl = UFOPUtils.getTempFile(file.getUrl()).getAbsolutePath().replace("." + extendName, "");
         List<String> fileEntryNameList = new ArrayList<>();
 
         try {
             fileEntryNameList = FileOperation.unzip(destFile, unzipUrl);
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("解压失败" + e);
-            throw new ApiException(500001, "解压异常：" + e.getMessage());
+            throw new ApiException("解压异常：" + e.getMessage());
         }
         if (destFile.exists()) {
-            destFile.delete();
+            boolean success = destFile.delete();
+            if (!success) {
+                log.error("文件" + destFile.getName() + "删除失败");
+            }
         }
 
         if (!fileEntryNameList.isEmpty() && unzipMode == 1) {
-            UserFile qiwenDir = SystemFile.getDir(userFile.getUserId(), userFile.getFilePath(), userFile.getFileName());
-            userFileMapper.insert(qiwenDir);
+            UserFile dir = SystemFileUtils.getDir(userFile.getUserId(), userFile.getFilePath(), userFile.getFileName());
+            userFileMapper.insert(dir);
         }
         for (String entryName : fileEntryNameList) {
-            asyncTaskComp.saveUnzipFile(userFile, fileBean, unzipMode, entryName, filePath);
+            asyncTaskHandler.saveUnzipFile(userFile, file, unzipMode, entryName, filePath);
         }
     }
 
     @Override
     public void updateFileDetail(String userFileId, String identifier, long fileSize) {
         UserFile userFile = userFileMapper.selectById(userFileId);
-        String currentTime = DateUtil.getCurrentTime();
-        File fileBean = new File();
-        fileBean.setIdentifier(identifier);
-        fileBean.setSize(fileSize);
-        fileBean.setModifyUserId(SessionUtil.getUserId());
-        fileBean.setId(userFile.getFileId());
-        fileMapper.updateById(fileBean);
-        userFile.setUploadTime(currentTime);
-        userFile.setModifyUserId(SessionUtil.getUserId());
+        File file = new File();
+        file.setIdentifier(identifier);
+        file.setSize(fileSize);
+        file.setModifyUserId(SessionUtils.getUserId());
+        file.setId(userFile.getFileId());
+        fileMapper.updateById(file);
+        userFile.setUploadTime(new Date());
+        userFile.setModifyUserId(SessionUtils.getUserId());
         userFileMapper.updateById(userFile);
     }
 
@@ -118,13 +123,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     public FileDetailVo getFileDetail(String userFileId) {
         UserFile userFile = userFileMapper.selectById(userFileId);
         File file = fileMapper.selectById(userFile.getFileId());
-        Music music = musicMapper.selectOne(new QueryWrapper<Music>().eq("fileId", userFile.getFileId()));
-        Image image = imageMapper.selectOne(new QueryWrapper<Image>().eq("fileId", userFile.getFileId()));
+        Music music = musicMapper.selectOne(new LambdaQueryWrapper<Music>().eq(Music::getFileId, userFile.getFileId()));
+        Image image = imageMapper.selectOne(new LambdaQueryWrapper<Image>().eq(Image::getFileId, userFile.getFileId()));
 
         if ("mp3".equalsIgnoreCase(userFile.getExtension()) || "flac".equalsIgnoreCase(userFile.getExtension())) {
             if (music == null) {
-                fileDealComp.parseMusicFile(userFile.getExtension(), file.getStorageType(), file.getUrl(), file.getId());
-                music = musicMapper.selectOne(new QueryWrapper<Music>().eq("fileId", userFile.getFileId()));
+//                fileHandler.parseMusicFile(userFile.getExtension(), file.getStorageType(), file.getUrl(), file.getId());
+                music = musicMapper.selectOne(new LambdaQueryWrapper<Music>().eq(Music::getFileId, userFile.getFileId()));
             }
         }
 

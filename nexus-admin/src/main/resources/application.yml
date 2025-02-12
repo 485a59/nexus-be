@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: nexus-admin
+  profiles:
+    active: dev
+  security:
+    user:
+      name: nexus
+      password: nexus
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  redis:
+    host: ${virtual-host} # Redis 服务器地址
+    database: 0 # Redis 数据库索引（默认为 0）
+    port: 6379 # Redis 服务器连接端口
+    password: # Redis 服务器连接密码（默认为空）
+    timeout: 300ms # 连接超时时间（毫秒）
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:cn/**/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  token-header: Authorization # JWT 存储的请求头
+  secret: nexus # JWT 加解密使用的密钥
+  expiration: 604800 # JWT 的超期限时间(60*60*24*7)
+  token-head: 'Bearer '  # JWT负载中拿到开头
+  expire:
+    access-token: 604800
+    refresh-token: 2592000 # 设置为一个月
+  blacklist: token-black-list
+
+redis:
+  database: nexus
+  key:
+    member: 'member'
+    auth-code: 'authCode'
+    data: 'data'
+    unique-visit: 'uniqueVisit'
+    total-visit: 'totalVisit'
+    upload-data: 'uploadData'
+    process-data: 'processData'
+  expire:
+    auth-code: 90 # 验证码超时时间
+    common: 86400 # 验证码超时时间
+aliyun:
+  oss:
+    endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
+    access-key-id: test # 访问身份验证中用到用户标识
+    access-key-secret: test # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucket-name: macro-oss # oss的存储空间
+    policy:
+      expire: 300 # 签名有效期(S)
+    max-size: 10 # 上传文件大小(M)
+    callback: http://${virtual-host}/aliyun/oss/callback # 文件上传成功后的回调地址
+    dir:
+      prefix: nexus/images/ # 上传文件夹路径前缀
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+
+mongo:
+  insert:
+    sqlEnable: true # 用于控制是否通过数据库数据来插入mongo
+
+ufop:
+  storage-type: 0

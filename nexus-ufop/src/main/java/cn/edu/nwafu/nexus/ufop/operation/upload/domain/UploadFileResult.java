@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 @Data
 public class UploadFileResult {
     private String fileName;
-    private String extendName;
+    private String extension;
     private long fileSize;
     private String fileUrl;
     private String identifier;

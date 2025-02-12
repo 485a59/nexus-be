@@ -20,7 +20,7 @@ spring:
     mongodb:
       host: ${virtual-host}
       port: 27017
-      database: erosion-watch
+      database: nexus
     elasticsearch:
       repositories:
         enabled: true
@@ -29,7 +29,7 @@ spring:
   rabbitmq:
     host: ${virtual-host}
     port: 5672
-    virtual-host: /erosion-watch
+    virtual-host: /nexus
     username: erosion
     password: erosion
 
@@ -45,7 +45,6 @@ secure:
       - /**/*.png
       - /**/*.map
       - /auth/**
-      - /hello
 
 mybatis:
   type-handlers-package: cn.edu.nwafu.nexus.infrastructure.typehandler

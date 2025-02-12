@@ -1,7 +1,8 @@
 package cn.edu.nwafu.nexus.domain.service;
 
 import cn.edu.nwafu.nexus.domain.response.MemberLoginVo;
-import cn.edu.nwafu.nexus.infrastructure.entity.Member;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.Member;
+import cn.edu.nwafu.nexus.infrastructure.model.vo.user.UserProfileVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,4 +21,14 @@ public interface MemberService extends IService<Member> {
     Member getByUsername(String username);
 
     String generateAuthCode(String telephone);
+
+    /**
+     * 退出登录
+     */
+    void logout();
+
+    /**
+     * 获取当前用户信息
+     */
+    UserProfileVo getCurrentUserProfile();
 }

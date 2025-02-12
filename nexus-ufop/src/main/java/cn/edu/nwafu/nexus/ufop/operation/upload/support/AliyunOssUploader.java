@@ -1,6 +1,7 @@
 package cn.edu.nwafu.nexus.ufop.operation.upload.support;
 
 import cn.edu.nwafu.nexus.common.service.RedisService;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import cn.edu.nwafu.nexus.ufop.config.AliyunConfig;
 import cn.edu.nwafu.nexus.ufop.constant.StorageTypeEnum;
 import cn.edu.nwafu.nexus.ufop.constant.UploadFileStatusEnum;
@@ -10,7 +11,6 @@ import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFileInfo;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFileResult;
 import cn.edu.nwafu.nexus.ufop.operation.upload.request.UploadMultipartFile;
 import cn.edu.nwafu.nexus.ufop.util.AliyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
 import com.alibaba.fastjson2.JSON;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.*;
@@ -36,7 +36,7 @@ import java.util.List;
 @Component
 public class AliyunOssUploader extends Uploader {
     @Resource
-    RedisService redisService;
+    private RedisService redisService;
 
     private AliyunConfig aliyunConfig;
 
@@ -52,7 +52,11 @@ public class AliyunOssUploader extends Uploader {
         OSS ossClient = AliyunUtils.getOSSClient(aliyunConfig);
         try {
             String uploadPartRequestKey = "nexus:upload:part_request:" + uploadFile.getIdentifier();
-            UploadFileInfo uploadFileInfo = JSON.parseObject(redisService.get(uploadPartRequestKey).toString(), UploadFileInfo.class);
+            Object uploadPartRequestKeyValue = redisService.get(uploadPartRequestKey);
+            UploadFileInfo uploadFileInfo = null;
+            if (uploadPartRequestKeyValue != null) {
+                uploadFileInfo = JSON.parseObject(uploadPartRequestKeyValue.toString(), UploadFileInfo.class);
+            }
             String fileUrl = uploadMultipartFile.getFileUrl();
             if (uploadFileInfo == null) {
                 InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(aliyunConfig.getOss().getBucketName(), fileUrl);
@@ -73,12 +77,12 @@ public class AliyunOssUploader extends Uploader {
             uploadPartRequest.setUploadId(uploadFileInfo.getUploadId());
             uploadPartRequest.setInputStream(uploadMultipartFile.getUploadInputStream());
             uploadPartRequest.setPartSize(uploadMultipartFile.getSize());
-            uploadPartRequest.setPartNumber(uploadFile.getChunkNumber());
+            uploadPartRequest.setPartNumber(uploadFile.getChunkNumber() + 1);
             log.debug(JSON.toJSONString(uploadPartRequest));
 
             UploadPartResult uploadPartResult = ossClient.uploadPart(uploadPartRequest);
 
-            log.debug("上传结果：" + JSON.toJSONString(uploadPartResult));
+            log.info("上传结果：{}", JSON.toJSONString(uploadPartResult));
 
             String partETagsKey = "nexus:upload:part_etags:" + uploadFile.getIdentifier();
             if (redisService.hasKey(partETagsKey)) {
@@ -103,20 +107,20 @@ public class AliyunOssUploader extends Uploader {
 
         uploadFileResult.setFileUrl(uploadFileInfo.getKey());
         uploadFileResult.setFileName(uploadMultipartFile.getFileName());
-        uploadFileResult.setExtendName(uploadMultipartFile.getExtension());
+        uploadFileResult.setExtension(uploadMultipartFile.getExtension());
         uploadFileResult.setFileSize(uploadFile.getTotalSize());
         if (uploadFile.getTotalChunks() == 1) {
             uploadFileResult.setFileSize(uploadMultipartFile.getSize());
         }
         uploadFileResult.setStorageType(StorageTypeEnum.ALIYUN_OSS);
         uploadFileResult.setIdentifier(uploadFile.getIdentifier());
-        if (uploadFile.getChunkNumber() == uploadFile.getTotalChunks()) {
+        if (uploadFile.getChunkNumber() == uploadFile.getTotalChunks() - 1) {
             log.info("分片上传完成");
             completeMultipartUpload(uploadFile);
             redisService.del("nexus:upload:chunk_number:" + uploadFile.getIdentifier());
             redisService.del("nexus:upload:part_etags:" + uploadFile.getIdentifier());
             redisService.del(uploadPartRequestKey);
-            if (UFOPUtils.isImageFile(uploadFileResult.getExtendName())) {
+            if (UFOPUtils.isImageFile(uploadFileResult.getExtension())) {
                 OSS ossClient = AliyunUtils.getOSSClient(aliyunConfig);
                 OSSObject ossObject = ossClient.getObject(aliyunConfig.getOss().getBucketName(),
                         UFOPUtils.getAliyunObjectNameByFileUrl(uploadFileResult.getFileUrl()));

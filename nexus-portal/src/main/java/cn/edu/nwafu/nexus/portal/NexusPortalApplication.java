@@ -9,8 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
  *
  * @author Huang Z.Y.
  */
-@SpringBootApplication(scanBasePackages = {"cn.edu.nwafu.nexus", "cn.edu.nwafu.nexus.security"})
-@ComponentScan(basePackages = {"cn.edu.nwafu.nexus", "cn.edu.nwafu.nexus.infrastructure", "cn.edu.nwafu.nexus.security"})
+@SpringBootApplication(scanBasePackages = {"cn.edu.nwafu.nexus", "cn.edu.nwafu.nexus.security", "cn.edu.nwafu.nexus.ufop"})
+@ComponentScan(basePackages = {"cn.edu.nwafu.nexus", "cn.edu.nwafu.nexus.infrastructure", "cn.edu.nwafu.nexus.security",
+        "cn.edu.nwafu.nexus.ufop"})
 public class NexusPortalApplication {
     public static void main(String[] args) {
         SpringApplication.run(NexusPortalApplication.class, args);

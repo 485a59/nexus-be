@@ -13,7 +13,7 @@ public enum UploadFileStatusEnum {
     SUCCESS(1, "上传成功"),
     UNCOMPLETED(2, "未完成");
 
-    private final int code;
+    private final Integer code;
     private final String message;
 
     UploadFileStatusEnum(int code, String message) {

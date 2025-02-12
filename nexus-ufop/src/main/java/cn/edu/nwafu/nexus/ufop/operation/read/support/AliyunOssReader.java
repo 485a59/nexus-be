@@ -6,7 +6,7 @@ import cn.edu.nwafu.nexus.ufop.operation.read.Reader;
 import cn.edu.nwafu.nexus.ufop.operation.read.domain.ReadFile;
 import cn.edu.nwafu.nexus.ufop.util.AliyunUtils;
 import cn.edu.nwafu.nexus.ufop.util.ReadFileUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.OSSObject;
 import org.apache.commons.io.FilenameUtils;

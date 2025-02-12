@@ -5,7 +5,7 @@ import cn.edu.nwafu.nexus.ufop.domain.ThumbImage;
 import cn.edu.nwafu.nexus.ufop.operation.preview.Previewer;
 import cn.edu.nwafu.nexus.ufop.operation.preview.domain.PreviewFile;
 import cn.edu.nwafu.nexus.ufop.util.AliyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.OSSObject;
 import lombok.Data;

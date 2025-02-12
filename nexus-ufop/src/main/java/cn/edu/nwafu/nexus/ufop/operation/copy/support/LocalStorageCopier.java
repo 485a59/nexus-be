@@ -3,7 +3,7 @@ package cn.edu.nwafu.nexus.ufop.operation.copy.support;
 import cn.edu.nwafu.nexus.ufop.exception.operation.CopyException;
 import cn.edu.nwafu.nexus.ufop.operation.copy.Copier;
 import cn.edu.nwafu.nexus.ufop.operation.copy.domain.CopyFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 

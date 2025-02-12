@@ -4,7 +4,7 @@ import cn.edu.nwafu.nexus.ufop.config.AliyunConfig;
 import cn.edu.nwafu.nexus.ufop.operation.write.Writer;
 import cn.edu.nwafu.nexus.ufop.operation.write.domain.WriteFile;
 import cn.edu.nwafu.nexus.ufop.util.AliyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.aliyun.oss.OSS;
 
 import java.io.InputStream;

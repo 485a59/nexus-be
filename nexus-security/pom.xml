@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.edu.nwafu</groupId>
-            <artifactId>nexus-common</artifactId>
+            <artifactId>nexus-infrastructure</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

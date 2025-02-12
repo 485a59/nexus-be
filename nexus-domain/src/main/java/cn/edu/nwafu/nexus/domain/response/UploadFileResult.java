@@ -1,7 +1,7 @@
 package cn.edu.nwafu.nexus.domain.response;
 
-import cn.edu.nwafu.nexus.domain.constant.StorageTypeEnum;
-import cn.edu.nwafu.nexus.domain.constant.UploadFileStatusEnum;
+import cn.edu.nwafu.nexus.ufop.constant.StorageTypeEnum;
+import cn.edu.nwafu.nexus.ufop.constant.UploadFileStatusEnum;
 import lombok.Data;
 
 import java.awt.image.BufferedImage;

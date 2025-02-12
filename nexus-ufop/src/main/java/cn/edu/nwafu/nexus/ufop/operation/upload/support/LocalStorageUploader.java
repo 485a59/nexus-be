@@ -1,5 +1,6 @@
 package cn.edu.nwafu.nexus.ufop.operation.upload.support;
 
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import cn.edu.nwafu.nexus.ufop.constant.StorageTypeEnum;
 import cn.edu.nwafu.nexus.ufop.constant.UploadFileStatusEnum;
 import cn.edu.nwafu.nexus.ufop.exception.operation.UploadException;
@@ -7,7 +8,6 @@ import cn.edu.nwafu.nexus.ufop.operation.upload.Uploader;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFile;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFileResult;
 import cn.edu.nwafu.nexus.ufop.operation.upload.request.UploadMultipartFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -56,7 +56,8 @@ public class LocalStorageUploader extends Uploader {
             try {
                 FileChannel fileChannel = raf.getChannel();
                 // 3. 计算偏移量
-                long position = (uploadFile.getChunkNumber() - 1) * uploadFile.getChunkSize();
+                // TODO:
+                long position = uploadFile.getChunkNumber() * uploadFile.getChunkSize();
                 // 4. 获取分片数据
                 byte[] fileData = uploadMultipartFile.getUploadBytes();
                 // 5. 写入数据
@@ -72,7 +73,7 @@ public class LocalStorageUploader extends Uploader {
             boolean isComplete = checkUploadStatus(uploadFile, confFile);
             uploadFileResult.setFileUrl(fileUrl);
             uploadFileResult.setFileName(uploadMultipartFile.getFileName());
-            uploadFileResult.setExtendName(uploadMultipartFile.getExtension());
+            uploadFileResult.setExtension(uploadMultipartFile.getExtension());
             uploadFileResult.setFileSize(uploadFile.getTotalSize());
             uploadFileResult.setStorageType(StorageTypeEnum.LOCAL);
 
@@ -84,7 +85,7 @@ public class LocalStorageUploader extends Uploader {
                 tempFile.renameTo(file);
                 FILE_URL_MAP.remove(uploadFile.getIdentifier());
 
-                if (UFOPUtils.isImageFile(uploadFileResult.getExtendName())) {
+                if (UFOPUtils.isImageFile(uploadFileResult.getExtension())) {
                     InputStream is = null;
                     try {
                         is = new FileInputStream(UFOPUtils.getLocalSaveFile(fileUrl));

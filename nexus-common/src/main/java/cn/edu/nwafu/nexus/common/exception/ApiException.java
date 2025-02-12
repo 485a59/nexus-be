@@ -23,17 +23,13 @@ public class ApiException extends RuntimeException {
     @Setter
     protected String message;
 
-    @Getter
-    @Setter
-    protected String i18nMessage;
-
     /**
      * 存储特殊数据
      */
     protected HashMap<String, Object> payload;
 
     public ApiException(String message) {
-        super(message);
+        this.message = message;
     }
 
     public ApiException(IErrorCode errorCode) {
@@ -63,11 +59,6 @@ public class ApiException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return i18nMessage != null ? i18nMessage : message;
-    }
-
-    @Override
-    public String getLocalizedMessage() {
-        return i18nMessage != null ? i18nMessage : message;
+        return message;
     }
 }

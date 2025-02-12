@@ -16,6 +16,11 @@
             <groupId>cn.edu.nwafu</groupId>
             <artifactId>nexus-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.edu.nwafu</groupId>
+            <artifactId>nexus-infrastructure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

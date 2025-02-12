@@ -1,6 +1,6 @@
 package cn.edu.nwafu.nexus.infrastructure.mapper;
 
-import cn.edu.nwafu.nexus.infrastructure.entity.FilePermission;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.FilePermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

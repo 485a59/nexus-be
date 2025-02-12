@@ -1,5 +1,6 @@
 package cn.edu.nwafu.nexus.ufop.util;
 
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import cn.edu.nwafu.nexus.ufop.exception.UFOPException;
 import lombok.extern.slf4j.Slf4j;
 

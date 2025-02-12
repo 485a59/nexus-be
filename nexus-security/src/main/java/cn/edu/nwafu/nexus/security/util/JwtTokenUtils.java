@@ -4,6 +4,7 @@ import cn.edu.nwafu.nexus.common.service.RedisService;
 import cn.edu.nwafu.nexus.security.dto.UserToken;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -49,7 +50,7 @@ public class JwtTokenUtils {
     private RedisService redisService;
 
     /**
-     * 根据负责生成 JWT 的 token
+     * 根据负责生成 JWT 的 token。
      */
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
@@ -90,6 +91,21 @@ public class JwtTokenUtils {
         try {
             Claims claims = getClaimsFromToken(token);
             username = claims.getSubject();
+
+            // 使用 Fastjson2 解析 JSON 字符串
+            JSONObject jsonObject = JSON.parseObject(username);
+
+            // 提取 member.id
+            if (jsonObject.containsKey("member")) {
+                JSONObject member = jsonObject.getJSONObject("member");
+                if (member.containsKey("username")) {
+                    username = member.getString("username");
+                } else {
+                    username = null;
+                }
+            } else {
+                username = null;
+            }
         } catch (Exception e) {
             username = null;
         }

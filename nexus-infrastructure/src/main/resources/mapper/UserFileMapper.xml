@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.nwafu.nexus.infrastructure.mapper.UserFileMapper">
+    <select id="selectPageVo" resultType="cn.edu.nwafu.nexus.infrastructure.model.vo.file.FileListVo">
+        select
+        a.id,
+        a.user_id,
+        a.file_id,
+        a.file_name,
+        a.file_path,
+        a.extension,
+        a.is_dir,
+        a.upload_time,
+        a.create_user_id,
+        a.modify_user_id,
+        f.size,
+        f.url,
+        i.width as image_width,
+        i.height as image_height
+        from user_file a
+        left join image i on a.file_id = i.file_id
+        left join file f on f.id = a.file_id
+        <where>
+            <if test="fileTypeId != null">
+                <choose>
+                    <when test="fileTypeId != 5">
+                        a.extension in (select extension from file_category where type_id = #{fileTypeId})
+                    </when>
+                    <otherwise>
+                        a.extension not in (select extension from file_category where type_id in (1, 2, 3, 4))
+                    </otherwise>
+                </choose>
+                and a.is_dir = 0
+            </if>
+            <if test="userFile.userId != null">
+                and a.user_id = #{userFile.userId}
+            </if>
+            <if test="userFile.filePath != null">
+                and a.file_path = #{userFile.filePath}
+            </if>
+            <if test="userFile.extension != null">
+                and a.extension = #{userFile.extension}
+            </if>
+            <if test="userFile.id != null">
+                and a.id = #{userFile.id}
+            </if>
+            <if test="userFile.fileName != null">
+                and a.file_name = #{userFile.fileName}
+            </if>
+            and a.delete_time is null
+        </where>
+        ORDER BY a.is_dir desc
+    </select>
+
+    <select id="selectUserFileByLikeRightFilePath" resultType="cn.edu.nwafu.nexus.infrastructure.model.entity.UserFile">
+        select *
+        from user_file
+        where (file_path = #{filePath} or file_path like concat(#{filePath}, '/%'))
+          and user_id = #{userId}
+          and delete_time is null
+    </select>
+
+    <select id="selectStorageSizeByUserId" resultType="java.lang.Long" parameterType="java.lang.String">
+        SELECT SUM(size)
+        FROM user_file
+                 LEFT JOIN file ON file.id = user_file.file_id
+        WHERE user_file.user_id = #{userId}
+          AND user_file.delete_time is null
+    </select>
+
+</mapper>

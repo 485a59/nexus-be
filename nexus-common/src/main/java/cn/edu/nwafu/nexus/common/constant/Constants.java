@@ -21,6 +21,13 @@ public class Constants {
      * 资源映射路径 前缀
      */
     public static final String RESOURCE_PREFIX = "profile";
+    public static final int DELETE_FILE_RANDOM_SIZE = 999999;
+
+    public static final String SUPER_ADMIN_KEY = "super_admin";
+    public static final String ADMIN_KEY = "admin";
+    public static final String STUDENT_KEY = "student";
+    public static final String TEACHER_KEY = "teacher";
+    public static final String BEARER_PREFIX = "Bearer ";
 
     private Constants() {
     }

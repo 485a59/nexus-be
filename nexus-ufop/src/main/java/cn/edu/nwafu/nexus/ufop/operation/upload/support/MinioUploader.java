@@ -1,6 +1,7 @@
 package cn.edu.nwafu.nexus.ufop.operation.upload.support;
 
 import cn.edu.nwafu.nexus.common.service.RedisService;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import cn.edu.nwafu.nexus.ufop.config.MinioConfig;
 import cn.edu.nwafu.nexus.ufop.constant.StorageTypeEnum;
 import cn.edu.nwafu.nexus.ufop.constant.UploadFileStatusEnum;
@@ -9,7 +10,6 @@ import cn.edu.nwafu.nexus.ufop.operation.upload.Uploader;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFile;
 import cn.edu.nwafu.nexus.ufop.operation.upload.domain.UploadFileResult;
 import cn.edu.nwafu.nexus.ufop.operation.upload.request.UploadMultipartFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
 import io.minio.*;
 import io.minio.errors.MinioException;
 import lombok.extern.slf4j.Slf4j;
@@ -77,7 +77,7 @@ public class MinioUploader extends Uploader {
             boolean isComplete = checkUploadStatus(uploadFile, processFile);
             uploadFileResult.setFileUrl(fileUrl);
             uploadFileResult.setFileName(uploadMultipartFile.getFileName());
-            uploadFileResult.setExtendName(uploadMultipartFile.getExtension());
+            uploadFileResult.setExtension(uploadMultipartFile.getExtension());
             uploadFileResult.setFileSize(uploadFile.getTotalSize());
             uploadFileResult.setStorageType(StorageTypeEnum.MINIO);
 
@@ -90,7 +90,7 @@ public class MinioUploader extends Uploader {
                 uploadFileResult.setFileUrl(fileUrl);
                 tempFile.delete();
 
-                if (UFOPUtils.isImageFile(uploadFileResult.getExtendName())) {
+                if (UFOPUtils.isImageFile(uploadFileResult.getExtension())) {
                     InputStream inputStream = null;
                     try {
                         MinioClient minioClient = MinioClient.builder()

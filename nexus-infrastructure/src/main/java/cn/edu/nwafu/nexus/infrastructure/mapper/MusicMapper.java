@@ -1,6 +1,6 @@
 package cn.edu.nwafu.nexus.infrastructure.mapper;
 
-import cn.edu.nwafu.nexus.infrastructure.entity.Music;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.Music;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

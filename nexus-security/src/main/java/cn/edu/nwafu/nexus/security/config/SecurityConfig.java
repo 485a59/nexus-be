@@ -1,5 +1,6 @@
 package cn.edu.nwafu.nexus.security.config;
 
+import cn.edu.nwafu.nexus.infrastructure.mapper.MemberMapper;
 import cn.edu.nwafu.nexus.security.component.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.annotation.Resource;
 
 /**
  * 安全校验配置。
@@ -33,6 +36,9 @@ public class SecurityConfig {
     private DynamicSecurityService dynamicSecurityService;
     @Autowired(required = false)
     private DynamicSecurityFilter dynamicSecurityFilter;
+
+    @Resource
+    private MemberMapper memberMapper;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

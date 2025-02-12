@@ -2,6 +2,7 @@ package cn.edu.nwafu.nexus.common.exception;
 
 import cn.edu.nwafu.nexus.common.api.CommonResult;
 import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -18,13 +19,11 @@ import java.sql.SQLSyntaxErrorException;
  * @author Huang Z.Y.
  */
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = ApiException.class)
     public CommonResult<?> handle(ApiException e) {
-        if (e.getErrorCode() != null) {
-            return CommonResult.failed(e.getErrorCode());
-        }
         return CommonResult.failed(e.getMessage());
     }
 

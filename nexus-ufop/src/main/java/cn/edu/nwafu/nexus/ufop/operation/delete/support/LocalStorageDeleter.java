@@ -3,7 +3,7 @@ package cn.edu.nwafu.nexus.ufop.operation.delete.support;
 import cn.edu.nwafu.nexus.ufop.exception.operation.DeleteException;
 import cn.edu.nwafu.nexus.ufop.operation.delete.Deleter;
 import cn.edu.nwafu.nexus.ufop.operation.delete.domain.DeleteFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;

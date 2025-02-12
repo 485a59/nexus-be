@@ -2,7 +2,7 @@ package cn.edu.nwafu.nexus.ufop.operation.download.support;
 
 import cn.edu.nwafu.nexus.ufop.operation.download.Downloader;
 import cn.edu.nwafu.nexus.ufop.operation.download.domain.DownloadFile;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;

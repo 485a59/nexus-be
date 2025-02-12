@@ -1,7 +1,7 @@
 package cn.edu.nwafu.nexus.domain.service;
 
 import cn.edu.nwafu.nexus.domain.response.FileDetailVo;
-import cn.edu.nwafu.nexus.infrastructure.entity.File;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.File;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

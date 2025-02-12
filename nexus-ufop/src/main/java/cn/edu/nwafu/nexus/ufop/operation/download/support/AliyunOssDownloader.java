@@ -4,7 +4,7 @@ import cn.edu.nwafu.nexus.ufop.config.AliyunConfig;
 import cn.edu.nwafu.nexus.ufop.operation.download.Downloader;
 import cn.edu.nwafu.nexus.ufop.operation.download.domain.DownloadFile;
 import cn.edu.nwafu.nexus.ufop.util.AliyunUtils;
-import cn.edu.nwafu.nexus.ufop.util.UFOPUtils;
+import cn.edu.nwafu.nexus.common.util.UFOPUtils;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;

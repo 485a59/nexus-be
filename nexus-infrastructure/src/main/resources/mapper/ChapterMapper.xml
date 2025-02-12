@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nwafu.nexus.infrastructure.mapper.ChapterMapper">
+
+    <resultMap id="ChapterResult" type="cn.edu.nwafu.nexus.infrastructure.model.entity.Chapter">
+        <id property="id" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="name" column="name"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectChapterVo">
+        select id,
+               parent_id,
+               name,
+               order_num,
+               status,
+               create_time,
+               update_time
+        from chapter
+    </sql>
+
+    <select id="selectChapterList" parameterType="cn.edu.nwafu.nexus.infrastructure.model.dto.curriculum.ChapterListDto"
+            resultType="cn.edu.nwafu.nexus.infrastructure.model.vo.curriculum.ChapterListVo">
+        select id,
+        name,
+        parent_id,
+        order_num,
+        status,
+        create_time
+        from chapter
+        where delete_time is null
+        <if test="name != null and name != ''">
+            AND name like concat('%', #{name}, '%')
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        order by parent_id, order_num
+    </select>
+
+    <select id="selectChapterById" parameterType="Long" resultMap="ChapterResult">
+        <include refid="selectChapterVo"/>
+        where id = #{ChapterId} and delete_time is null
+    </select>
+
+    <select id="hasChildByChapterId" parameterType="Long" resultType="Integer">
+        select count(1)
+        from sys_Chapter
+        where parent_id = #{ChapterId}
+          and delete_time is null
+    </select>
+
+    <select id="checkChapterNameUnique" resultType="Integer">
+        select count(1)
+        from sys_Chapter
+        where name = #{name}
+          and parent_id = #{parentId}
+          and delete_time is null
+    </select>
+
+    <insert id="insertChapter" parameterType="cn.edu.nwafu.nexus.infrastructure.model.entity.Chapter">
+        insert into sys_Chapter(parent_id, ancestors, name, order_num
+            phone, email, status)
+        values (#{parentId}, #{ancestors}, #{name}, #{orderNum}, #{leaderId}, #{leaderName},
+                #{phone}, #{email}, #{status})
+    </insert>
+
+    <update id="updateChapter" parameterType="cn.edu.nwafu.nexus.infrastructure.model.entity.Chapter">
+        update sys_Chapter
+        <set>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="ancestors != null">ancestors = #{ancestors},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="leaderId != null">leader_id = #{leaderId},</if>
+            <if test="leaderName != null">leader_name = #{leaderName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="status != null">status = #{status},</if>
+            update_time = CURRENT_TIMESTAMP(3)
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteChapterById" parameterType="Long">
+        update sys_Chapter
+        set delete_time = CURRENT_TIMESTAMP(3)
+        where id = #{ChapterId}
+    </update>
+
+</mapper>

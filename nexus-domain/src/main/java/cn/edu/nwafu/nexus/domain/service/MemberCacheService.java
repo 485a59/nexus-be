@@ -1,7 +1,7 @@
 package cn.edu.nwafu.nexus.domain.service;
 
 
-import cn.edu.nwafu.nexus.infrastructure.entity.Member;
+import cn.edu.nwafu.nexus.infrastructure.model.entity.Member;
 
 /**
  * 用户信息缓存业务类。
@@ -12,7 +12,7 @@ public interface MemberCacheService {
     /**
      * 删除会员用户缓存。
      */
-    void delMember(Long memberId);
+    void delMember(String memberId);
 
     /**
      * 获取会员用户缓存。
