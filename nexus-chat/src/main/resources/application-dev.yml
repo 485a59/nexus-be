@@ -1,6 +1,6 @@
 virtual-host: 127.0.0.1
 server:
-  port: 8081
+  port: 8083
 
 spring:
   datasource:
@@ -32,11 +32,13 @@ spring:
     virtual-host: /nexus
     username: nexus
     password: nexus
+
 secure:
   ignored:
     urls: # 安全路径白名单
       - /swagger-ui
       - /swagger-resources/**
+      - /system/**
       - /**/v2/api-docs
       - /**/*.html
       - /**/*.js
@@ -44,6 +46,8 @@ secure:
       - /**/*.png
       - /**/*.map
       - /auth/**
+      - /hello
+      - /**
 
 mybatis:
   type-handlers-package: cn.edu.nwafu.nexus.infrastructure.typehandler

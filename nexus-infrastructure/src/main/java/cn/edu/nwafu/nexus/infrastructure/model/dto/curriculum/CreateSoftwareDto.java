@@ -12,8 +12,6 @@ public class CreateSoftwareDto extends UploadFileDto {
     private String fileId;
     private String version;
     private String platform;
-    private String developer;
-    private String requirements;
-    private String license;
     private String description;
+    private String category;
 }

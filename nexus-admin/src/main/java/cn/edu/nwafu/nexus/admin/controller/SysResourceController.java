@@ -1,23 +1,23 @@
 package cn.edu.nwafu.nexus.admin.controller;
 
+import cn.edu.nwafu.nexus.common.api.CommonPage;
 import cn.edu.nwafu.nexus.common.api.CommonResult;
 import cn.edu.nwafu.nexus.domain.service.CourseResourceService;
 import cn.edu.nwafu.nexus.domain.service.FileTransferService;
-import cn.edu.nwafu.nexus.infrastructure.model.dto.curriculum.CreateSlideDto;
-import cn.edu.nwafu.nexus.infrastructure.model.dto.curriculum.CreateSoftwareDto;
-import cn.edu.nwafu.nexus.infrastructure.model.dto.curriculum.CreateTextbookDto;
-import cn.edu.nwafu.nexus.infrastructure.model.dto.curriculum.CreateVideoDto;
+import cn.edu.nwafu.nexus.infrastructure.model.dto.curriculum.*;
+import cn.edu.nwafu.nexus.infrastructure.model.vo.curriculum.SlideListVo;
+import cn.edu.nwafu.nexus.infrastructure.model.vo.curriculum.SoftwareListVo;
+import cn.edu.nwafu.nexus.infrastructure.model.vo.curriculum.TextbookListVo;
+import cn.edu.nwafu.nexus.infrastructure.model.vo.curriculum.VideoListVo;
 import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Huang Z.Y.
@@ -75,6 +75,15 @@ public class SysResourceController {
         return CommonResult.success(null);
     }
 
+    @Operation(summary = "幻灯片列表")
+    @PostMapping("/slide/list")
+    public CommonResult<CommonPage<SlideListVo>> listSlide(@RequestBody SlideListDto command,
+                                                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        List<SlideListVo> list = resourceService.listSlide(command, pageSize, pageNum);
+        return CommonResult.success(CommonPage.restPage(list));
+    }
+
     @Operation(summary = "创建软件")
     @PostMapping("/software")
     public CommonResult<Void> createSoftware(@RequestBody CreateSoftwareDto command) {
@@ -86,6 +95,40 @@ public class SysResourceController {
         command.setFileId(userFileId);
         // 创建教材元数据
         resourceService.createSoftware(command);
+        return CommonResult.success(null);
+    }
+
+    @Operation(summary = "教材资源列表")
+    @PostMapping("/textbook/list")
+    public CommonResult<CommonPage<TextbookListVo>> listTextbook(@RequestBody TextbookListDto command,
+                                                                 @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        List<TextbookListVo> list = resourceService.listTextbook(command, pageSize, pageNum);
+        return CommonResult.success(CommonPage.restPage(list));
+    }
+
+    @Operation(summary = "视频资源列表")
+    @PostMapping("/video/list")
+    public CommonResult<CommonPage<VideoListVo>> listVideo(@RequestBody VideoListDto command,
+                                                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        List<VideoListVo> list = resourceService.listVideo(command, pageSize, pageNum);
+        return CommonResult.success(CommonPage.restPage(list));
+    }
+
+    @Operation(summary = "软件资源列表")
+    @PostMapping("/software/list")
+    public CommonResult<CommonPage<SoftwareListVo>> listSoftware(@RequestBody SoftwareListDto command,
+                                                                 @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        List<SoftwareListVo> list = resourceService.listSoftware(command, pageSize, pageNum);
+        return CommonResult.success(CommonPage.restPage(list));
+    }
+
+    @Operation(summary = "删除教材资源")
+    @DeleteMapping("/{id}")
+    public CommonResult<Void> delete(@PathVariable("id") String id) {
+        resourceService.delete(id);
         return CommonResult.success(null);
     }
 }

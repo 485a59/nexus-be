@@ -16,15 +16,7 @@ public class SoftwareMeta {
      */
     private String platform;
     /**
-     * 开发商
+     * 分类
      */
-    private String developer;
-    /**
-     * 系统要求
-     */
-    private String requirements;
-    /**
-     * 许可证类型
-     */
-    private String license;
+    private String category;
 } 

@@ -83,6 +83,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         Member member = new Member();
         member.setUsername(username);
         member.setPhoneNumber(telephone);
+        member.setStatus(1);
         // 密码加密
         member.setPassword(passwordEncoder.encode(password));
         member.setLoginTime(new Date());

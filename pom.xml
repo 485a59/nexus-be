@@ -17,6 +17,7 @@
         <module>nexus-portal</module>
         <module>nexus-security</module>
         <module>nexus-ufop</module>
+        <module>nexus-chat</module>
     </modules>
 
     <properties>
@@ -456,6 +457,7 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
     </dependencies>
 
     <build>

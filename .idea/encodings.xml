@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/nexus-admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-chat/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nexus-chat/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nexus-domain/src/main/java" charset="UTF-8" />

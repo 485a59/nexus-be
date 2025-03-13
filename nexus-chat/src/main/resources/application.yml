@@ -1,6 +1,6 @@
 spring:
   application:
-    name: nexus-admin
+    name: nexus-chat
   profiles:
     active: dev
   security:
@@ -91,3 +91,8 @@ ufop:
       access-key-id: LTAI5tSLXSE1E3TNKzb1FnCg
       access-key-secret: 4X91UycpkhPKyIx1z8nzA7AYsB7Hh2
       bucket-name: nwafu-nexus
+
+chat:
+  api:
+    url: https://api.siliconflow.cn/v1/chat/completions
+    token: sk-xxsyeugnpsbjzxefafkbquxelnflvuappcevohbyqifhfkos

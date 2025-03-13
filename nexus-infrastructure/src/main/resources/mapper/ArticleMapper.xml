@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nwafu.nexus.infrastructure.mapper.ArticleMapper">
+
+    <resultMap id="ArticleResult" type="cn.edu.nwafu.nexus.infrastructure.model.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="date" column="date"/>
+        <result property="url" column="url"/>
+        <result property="description" column="description"/>
+        <result property="source" column="source"/>
+        <result property="authors" column="authors"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectArticleVo">
+        select id,
+               title, date, url, description, source, authors, create_time, update_time
+        from article
+    </sql>
+
+    <select id="existsByUrl" resultType="boolean">
+        select count(1) > 0
+        from article
+        where url = #{url}
+          and delete_time is null
+    </select>
+
+    <select id="selectArticleList" resultMap="ArticleResult">
+        <include refid="selectArticleVo"/>
+        where delete_time is null
+        order by create_time desc
+    </select>
+
+    <select id="selectArticleById" parameterType="Long" resultMap="ArticleResult">
+        <include refid="selectArticleVo"/>
+        where id = #{id}
+        and delete_time is null
+    </select>
+
+</mapper> 

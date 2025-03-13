@@ -2,6 +2,7 @@ package cn.edu.nwafu.nexus.portal.controller;
 
 import cn.edu.nwafu.nexus.common.api.CommonPage;
 import cn.edu.nwafu.nexus.common.api.CommonResult;
+import cn.edu.nwafu.nexus.common.exception.Asserts;
 import cn.edu.nwafu.nexus.domain.component.FileHandler;
 import cn.edu.nwafu.nexus.domain.response.FileDetailVo;
 import cn.edu.nwafu.nexus.domain.service.FileApplicationService;
@@ -104,7 +105,7 @@ public class FileController {
         try {
             fileService.unzipFile(id, unzipFileDto.getMode(), unzipFileDto.getPath());
         } catch (Exception e) {
-            return CommonResult.failed(e.getMessage());
+            Asserts.fail(e.getMessage());
         }
         return CommonResult.success("解压文件成功");
     }

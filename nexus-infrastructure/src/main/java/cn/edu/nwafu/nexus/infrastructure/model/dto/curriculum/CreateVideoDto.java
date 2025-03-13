@@ -13,6 +13,5 @@ public class CreateVideoDto extends UploadFileDto {
     private Integer chapterId;
     private String lecturer;
     private Integer views;
-    private String poster;
     private String description;
 }

@@ -24,7 +24,7 @@ import lombok.Setter;
 public class CourseResource extends BaseEntity<CourseResource> {
     @ApiModelProperty("资源ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    private String id;
 
     @ApiModelProperty("资源名称")
     @TableField("name")

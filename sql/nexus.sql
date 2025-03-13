@@ -1,5 +1,5 @@
 -- ----------------------------
--- 数据库表结构生成时间：Mon Feb 10 22:07:26 CST 2025
+-- 数据库表结构生成时间：Sat Mar 08 11:01:24 CST 2025
 -- ----------------------------
 
 
@@ -145,6 +145,7 @@ CREATE TABLE `upload_task` (
     `delete_time` DATETIME(3) NULL DEFAULT NULL COMMENT '删除时间',
     `id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '上传任务 ID',
     `user_id` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '用户 ID',
+    `file_id` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件 ID',
     `identifier` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'MD5 唯一标识',
     `file_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件名称',
     `file_path` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件路径',
@@ -152,7 +153,8 @@ CREATE TABLE `upload_task` (
     `upload_time` DATETIME(3) NOT NULL COMMENT '上传时间',
     `upload_status` INT NOT NULL DEFAULT 0 COMMENT '上传状态 (1 表示成功，0 表示失败或未完成)',
     PRIMARY KEY (`id`),
-    KEY `idx_user_id` (`user_id`)
+    KEY `idx_user_id` (`user_id`),
+    KEY `idx_file_id` (`file_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='上传任务信息表';
 
 /*========= 图像表 ==========*/
@@ -197,14 +199,13 @@ CREATE TABLE `sys_dept` (
     `id` INT AUTO_INCREMENT NOT NULL COMMENT '部门编号',
     `parent_id` INT NOT NULL DEFAULT 0 COMMENT '父部门id',
     `ancestors` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '祖级列表',
-    `dept_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '部门名称',
+    `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '部门名称',
     `order_num` INT NOT NULL DEFAULT 0 COMMENT '显示顺序',
     `phone` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '联系电话',
     `email` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '邮箱',
     `status` INT NOT NULL DEFAULT 0 COMMENT '部门状态（0正常 1停用）',
     PRIMARY KEY (`id`),
-    KEY `idx_parent_id` (`parent_id`),
-    KEY `idx_leader_id` (`leader_id`)
+    KEY `idx_parent_id` (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='部门表';
 
 /*========= 系统参数表 ==========*/
@@ -224,12 +225,12 @@ CREATE TABLE `chapter` (
     `create_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
     `update_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
     `delete_time` DATETIME(3) NULL DEFAULT NULL COMMENT '删除时间',
-    `id` VARCHAR(255) NOT NULL COMMENT '章节ID',
+    `id` INT AUTO_INCREMENT NOT NULL COMMENT '章节ID',
     `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '章节名称',
     `parent_id` INT NOT NULL DEFAULT 0 COMMENT '父章节号',
     `order_num` INT NOT NULL DEFAULT 0 COMMENT '排序序号',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '描述',
-    `status` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '状态',
+    `status` INT NOT NULL DEFAULT 0 COMMENT '状态(0 停用,1 启用)',
     PRIMARY KEY (`id`),
     KEY `idx_parent_id` (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='章节信息表';
@@ -296,16 +297,33 @@ CREATE TABLE `course_resource` (
     `create_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
     `update_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
     `delete_time` DATETIME(3) NULL DEFAULT NULL COMMENT '删除时间',
-    `id` INT AUTO_INCREMENT NOT NULL COMMENT '资源ID',
-    `chapter_id` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '章节ID',
-    `user_file_id` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '用户文件ID',
+    `id` VARCHAR(255) NOT NULL COMMENT '资源ID',
+    `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '资源名称',
+    `chapter_id` INT NOT NULL DEFAULT 0 COMMENT '章节ID',
+    `file_id` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '用户文件ID',
     `type` INT NOT NULL DEFAULT 0 COMMENT '资源类型(1-教材,2-视频,3-软件,4-课件)',
     `meta` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '元数据(JSON格式)',
     `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '描述',
     PRIMARY KEY (`id`),
     KEY `idx_chapter_id` (`chapter_id`),
-    KEY `idx_user_file_id` (`user_file_id`)
+    KEY `idx_file_id` (`file_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程资源信息表';
+
+/*========= 文章表 ==========*/
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article` (
+    `create_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
+    `update_time` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
+    `delete_time` DATETIME(3) NULL DEFAULT NULL COMMENT '删除时间',
+    `id` BIGINT AUTO_INCREMENT NOT NULL COMMENT '文章ID',
+    `title` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文章标题',
+    `date` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '发布日期',
+    `url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文章链接',
+    `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文章描述',
+    `source` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文章来源',
+    `authors` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '作者列表',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文章表';
 
 /*========= 用户文件信息表 ==========*/
 DROP TABLE IF EXISTS `user_file`;
